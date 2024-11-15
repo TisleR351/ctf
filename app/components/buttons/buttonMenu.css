@@ -1,0 +1,47 @@
+.button-menu {
+    color: var(--primary-8);
+    width: 80%;
+    font-size: 40px;
+    aspect-ratio: 1;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.button-menu:hover {
+    color: white;
+    background-color: var(--primary-8);
+    transform: scale(1.1);
+}
+
+.button-menu:active {
+    transform: scale(0.95);
+    background-color: var(--primary-8);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-menu::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+}
+
+.button-menu:hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+.button-menu > * {
+    position: relative;
+    z-index: 1;
+}
