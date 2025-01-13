@@ -1,7 +1,14 @@
 .divider {
-    position: relative;
+    background: var(--primary-9);
     display: block;
+}
+
+.divider.vertical {
+    height: 80%;
+    width: 1px;
+}
+
+.divider.horizontal {
     height: 1px;
-    width: 90%;
-    background-color: var(--primary-8);
+    width: 80%;
 }

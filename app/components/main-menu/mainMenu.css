@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: space-evenly;
     box-shadow: 3px 3px 15px var(--achromatic-3);
-    max-width: 10vh;
+    width: 100%;
     background-color: var(--achromatic-0);
     height: 95vh;
 }
@@ -19,7 +19,7 @@
     color: var(--primary-8);
     margin-top: 5%;
     width: 90%;
-    font-size: 40px;
+    font-size: var(--font-size-large);
 }
 
 .main-menu-content {

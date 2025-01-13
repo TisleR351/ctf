@@ -1,4 +1,4 @@
-import ButtonMenu from "@/app/components/buttons/buttonMenu";
+import MenuButton from "@/app/components/main-menu/menu-button/menuButton";
 import "./mainMenu.css";
 import Divider from "@/app/components/divider/divider";
 
@@ -12,14 +12,22 @@ export default function MainMenu() {
       <div className="main-menu-header">
         <Logo />
       </div>
-      <Divider />
+      <Divider direction="horizontal" />
       <div className="main-menu-content">
-        <ButtonMenu icon="fa-flag" tooltip="Challenge" />
-        <ButtonMenu icon="fa-sort-amount-up-alt" tooltip="Ranking" />
-        <ButtonMenu icon="fa-users" tooltip="Teams" />
+        <MenuButton icon="fa-flag" tooltip="Challenge" href={"/challenges"} />
+        <MenuButton
+          icon="fa-sort-amount-up-alt"
+          tooltip="Ranking"
+          href={"/rankings"}
+        />
+        <MenuButton icon="fa-users" tooltip="Teams" href={"/teams"} />
       </div>
-      <Divider />
-      <ButtonMenu icon="fa-user-graduate" tooltip="About us" />
+      <Divider direction="horizontal" />
+      <MenuButton
+        icon="fa-user-graduate"
+        tooltip="About us"
+        href={"/about-us"}
+      />
     </div>
   );
 }

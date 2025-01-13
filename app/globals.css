@@ -50,6 +50,11 @@
 
   --corect: #BDF5BD;
   --incorrect: #FFB3B3;
+
+  --font-size-large: 40px;
+  --font-size-medium: 30px;
+  --font-size-small: 20px;
+  --font-size-xsmall: 15px;
 }
 
 body {
@@ -57,7 +62,9 @@ body {
 }
 
 * {
-  border-radius: 0.5vh;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 0.5vw;
 }
 
 

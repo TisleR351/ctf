@@ -1,12 +1,7 @@
-import Overlay from "@/app/components/overlay/overlay";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Background from "@/app/components/background/background";
+import "./page.css";
+import React from "react";
 
 export default function Home() {
-  return (
-    <div>
-      <Background />
-      <Overlay />
-    </div>
-  );
+  return <div></div>;
 }
