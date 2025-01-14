@@ -1,4 +1,4 @@
-.sub-menu-button {
+.login-menu-button {
     color: var(--primary-8);
     width: auto;
     height: 100%;
@@ -17,28 +17,28 @@
     white-space: nowrap;
 }
 
-.sub-menu-link {
+.login-menu-link {
     display: flex;
     align-items: center;
     height: 80%;
 }
 
-.sub-menu-button:hover {
+.login-menu-button:hover {
     color: var(--achromatic-0);
     background-color: var(--primary-8);
     transform: scale(1.1);
 }
 
-.sub-menu-button:active {
+.login-menu-button:active {
     background-color: var(--primary-8);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.sub-menu-button > * {
+.login-menu-button > * {
     position: relative;
     z-index: 1;
 }
 
-.sub-menu-button-icon {
+.login-menu-button-icon {
     font-size: var(--font-size-medium)
 }
