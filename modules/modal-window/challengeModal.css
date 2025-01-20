@@ -1,0 +1,22 @@
+.challenge-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.challenge-modal-content {
+    width: 40%;
+    padding: 4vh 4vw;
+    text-align: start;
+    cursor: default;
+    background: var(--achromatic-0);
+    color: var(--primary-8);
+}

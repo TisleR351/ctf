@@ -1,0 +1,30 @@
+.challenge-type-card-container {
+    background-color: var(--achromatic-0);
+    box-shadow: 3px 3px 15px var(--achromatic-3);
+}
+
+.challenge-type-card-title {
+    padding-top: 2vh;
+    padding-left: 3vw;
+    font-size: var(--font-size-large);
+    text-transform: uppercase;
+    color: var(--primary-8)
+}
+
+.challenge-card-container {
+    display: grid;
+    gap: 1vw;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 1024px) {
+    .challenge-card-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .challenge-card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

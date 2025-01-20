@@ -1,0 +1,6 @@
+.profile-credits {
+    margin-left: 2vw;
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+    color: var(--primary-8);
+}

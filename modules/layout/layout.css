@@ -1,0 +1,9 @@
+.page-content {
+    position: relative;
+    margin-left: max(100px, 6vw);
+    margin-top: 12vh;
+    max-height: 85.5vh;
+    color: white;
+    overflow-y: auto;
+    padding-right: 0.5vw;
+}

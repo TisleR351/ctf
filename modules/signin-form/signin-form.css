@@ -1,0 +1,49 @@
+.signin-form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 80%;
+    background-color: var(--achromatic-0);
+    gap: 5%;
+}
+
+.signin-form-title {
+    font-size: var(--font-size-xxlarge);
+}
+
+.signin-form-submit-button-link {
+    width: 80%;
+}
+
+.signin-form-submit-button {
+    width: 100%;
+    height: 6vh;
+    background-color: var(--primary-9);
+    color: var(--achromatic-0);
+    font-size: var(--font-size-medium);
+    justify-content: center;
+    align-items: center;
+}
+
+.signin-form-submit-button:hover {
+    color: var(--achromatic-0);
+    background-color: var(--primary-8);
+    transform: scale(1.01);
+}
+
+.signin-form-submit-button:active {
+    background-color: var(--primary-8);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.signin-form-forgotten-password {
+    width: 80%;
+    color: var(--primary-6);
+    font-size: var(--font-size-small);
+}

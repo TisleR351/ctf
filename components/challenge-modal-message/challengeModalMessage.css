@@ -1,0 +1,22 @@
+.challenge-modal-message-container {
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    width: 100%;
+    height: 5vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.challenge-modal-message-container.bg-available {
+    background-color: var(--available);
+}
+
+.challenge-modal-message-container.bg-neutral {
+    background-color: var(--neutral);
+}
+
+.challenge-modal-message-container.bg-correct {
+    background-color: var(--correct);
+}

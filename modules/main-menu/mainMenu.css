@@ -1,0 +1,37 @@
+@import '@/app/globals.css';
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 3px 3px 15px var(--achromatic-3);
+    width: 100%;
+    background-color: var(--achromatic-0);
+    height: 95vh;
+}
+
+.main-menu-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-8);
+    margin-top: 5%;
+    width: 90%;
+    font-size: var(--font-size-large);
+}
+
+.main-menu-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10vh;
+    width: 90%;
+    height: 60vh;
+}
+
+.main-menu-footer {
+    width: 90%;
+}
