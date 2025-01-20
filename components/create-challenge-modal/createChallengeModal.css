@@ -1,0 +1,35 @@
+.create-challenge-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2vh;
+}
+
+.title-input {
+    height: 12vh;
+    font-size: var(--font-size-medium);
+}
+
+.file-url-input {
+    height: 8vh;
+    font-size: var(--font-size-small);
+}
+
+.credits-input {
+    height: 8vh;
+    font-size: var(--font-size-small);
+}
+
+.flag-input {
+    height: 8vh;
+    font-size: var(--font-size-small);
+}
+
+.description-text-area {
+    font-size: var(--font-size-small);
+    height: 15vh;
+}
+
+.save-button {
+    border: 1px solid var(--primary-8)
+}

@@ -1,0 +1,44 @@
+.challenge-modal-form-container {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    height: 6vh;
+}
+
+.challenge-form-submit-button {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    white-space: nowrap;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px var(--primary-8);
+    gap: 1vw;
+}
+
+.challenge-form-submit-button:disabled {
+    border: solid 1px var(--achromatic-5);
+    color: var(--achromatic-5);
+}
+
+.challenge-form-submit-button:not(:disabled):hover {
+    color: var(--achromatic-0);
+    background-color: var(--primary-8);
+    transform: scale(1.02);
+}
+
+.challenge-form-submit-button:not(:disabled):hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+.challenge-form-submit-button:not(:disabled):active {
+    background-color: var(--primary-9);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}

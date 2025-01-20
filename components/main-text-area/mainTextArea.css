@@ -1,0 +1,21 @@
+.main-text-area-container {
+    width: 100%;
+    gap: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-text-area {
+    font-size: var(--font-size-small);
+    font-weight: initial;
+    border: solid 1px var(--primary-8);
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+}
+
+.main-text-area:disabled {
+    border: solid 1px var(--achromatic-5);
+    color: var(--achromatic-5);
+}

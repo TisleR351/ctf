@@ -1,0 +1,17 @@
+.signup-form-group-input {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    width: 80%;
+    color: var(--primary-9);
+    gap: 20%;
+}
+
+.signup-form-input {
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: var(--font-size-small);
+    height: 100%;
+    width: 100%;
+    border: solid 1px var(--primary-9);
+}

@@ -4,7 +4,7 @@
 
 :root {
 
-  --achromatic-0: #fcfcfc;
+  --achromatic-0: #f8f8f8;
   --achromatic-1: #D9D9D9;
   --achromatic-2: #B3B3B3;
   --achromatic-3: #999999;
@@ -49,17 +49,22 @@
   --tertiary-9: #1A0004;
 
   --correct: #BDF5BD;
-  --incorrect: #FFB3B3;
   --available: #b3f9ff;
   --neutral: #cacaca;
 
+  --correct-hover: #82aa82;
+  --available-hover: #7cafb3;
+  --neutral-hover: #888888;
+
   --font-correct: #4d634d;
-  --font-incorrect: #7a5656;
   --font-available: #5c8083;
   --font-neutral: #504f4f;
 
+  --font-size-xxlarge: 80px;
+  --font-size-xlarge: 60px;
   --font-size-large: 40px;
   --font-size-medium: 30px;
+  --font-size-medium1: 25px;
   --font-size-small: 20px;
   --font-size-xsmall: 15px;
 }

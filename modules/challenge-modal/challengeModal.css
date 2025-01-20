@@ -1,0 +1,28 @@
+
+
+.challenge-modal-content-title {
+    text-align: center;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    text-transform: uppercase;
+    font-size: var(--font-size-large);
+}
+
+.challenge-modal-content-credits {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    text-align: center;
+    font-size: var(--font-size-medium1)
+}
+
+.challenge-modal-content-description {
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    font-size: var(--font-size-small);
+    text-align: justify;
+}
+
+.challenge-modal-content-author {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}

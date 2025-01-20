@@ -1,0 +1,37 @@
+.background {
+    background-color: var(--achromatic-9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    border-radius: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+
+.text-line {
+    text-transform: uppercase;
+    -webkit-text-stroke: 2px var(--achromatic-7);
+    letter-spacing: 5px;
+    color: transparent;
+}
+
+.text-line.large {
+    font-size: 365px;
+}
+
+.text-line.medium {
+    font-size: 385px;
+}
+
+.text-line.small {
+    font-size: 370px;
+}
