@@ -1,0 +1,11 @@
+.login-menu {
+    padding-right: 1vw;
+    padding-left: 1vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 8vh;
+    background: var(--achromatic-0);
+    box-shadow: 3px 3px 15px var(--achromatic-3);
+}

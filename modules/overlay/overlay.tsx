@@ -6,7 +6,7 @@ import ProfileMenu from "@/modules/profile-menu/profileMenu";
 import LoginMenu from "@/components/login-menu/loginMenu";
 
 export default function Overlay() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <div className="overlay">
       <div className="main-menu-container">
