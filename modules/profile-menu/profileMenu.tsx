@@ -1,4 +1,6 @@
 "use client";
+import "./profileMenu.css";
+
 import Divider from "@/components/divider/divider";
 import ProfileDropdown from "@/components/profile-dropdown/profileDropdown";
 import ProfileCredits from "@/components/profile-credits/profileCredits";

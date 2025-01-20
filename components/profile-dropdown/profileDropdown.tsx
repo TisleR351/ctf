@@ -59,9 +59,9 @@ export default function ProfileDropdown({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{
-              type: "spring",
+              type: "keyframes",
               stiffness: 200,
-              damping: 20,
+              damping: 50,
             }}
           >
             {dropdownOptions.map((option) => (
