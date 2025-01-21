@@ -40,7 +40,7 @@ export default function Overlay() {
     } else {
       setIsAdmin(false);
     }
-  }, [sessionStorage.getItem("token")]);
+  }, []);
 
   return (
     <div className="overlay">
