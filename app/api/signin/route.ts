@@ -3,11 +3,11 @@ import { getDb } from "@/public/lib/mongodb";
 import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
+  const { emailOrUsername, password } = await request.json();
 
-  if (!email || !password) {
+  if (!emailOrUsername || !password) {
     return NextResponse.json(
-      { error: "Email and password are required." },
+      { error: "Email/Username and password are required." },
       { status: 400 },
     );
   }
@@ -15,26 +15,31 @@ export async function POST(request: Request) {
   try {
     const db = await getDb();
 
-    const user = await db.collection("user").findOne({ email });
+    // Recherche par email ou nom d'utilisateur
+    const user = await db.collection("user").findOne({
+      $or: [{ email: emailOrUsername }, { username: emailOrUsername }],
+    });
 
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid email or password." },
+        { error: "Invalid email/username or password." },
         { status: 401 },
       );
     }
 
+    // Vérification du mot de passe
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       return NextResponse.json(
-        { error: "Invalid email or password." },
+        { error: "Invalid email/username or password." },
         { status: 401 },
       );
     }
 
     const token = user.token;
 
+    // Réponse réussie avec le token
     const response = NextResponse.json(
       { message: "Sign in successful.", token },
       { status: 200 },
@@ -44,7 +49,6 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
-    console.error("Sign in error: ", error);
-    return NextResponse.json({ error: "Non" }, { status: 500 });
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }

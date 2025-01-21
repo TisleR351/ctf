@@ -9,7 +9,7 @@ import { Message } from "@/components/message/message";
 import { MessageEnums } from "@/public/enums/MessageEnums";
 
 export default function SigninForm() {
-  const [username, setUsername] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -17,7 +17,7 @@ export default function SigninForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!emailOrUsername || !password) {
       setError("Both fields are required.");
       setMessage("");
       return;
@@ -29,7 +29,7 @@ export default function SigninForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: username, password }),
+        body: JSON.stringify({ emailOrUsername, password }),
       });
 
       const data = await response.json();
@@ -57,9 +57,9 @@ export default function SigninForm() {
       <form className={"signin-form-content"} onSubmit={handleSubmit}>
         <div className={"signin-form-title"}>Sign in</div>
         <SignupFormInput
-          label={"username"}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          label={"email or username"}
+          value={emailOrUsername}
+          onChange={(e) => setEmailOrUsername(e.target.value)}
           required={true}
         />
         <SignupFormInput
@@ -92,7 +92,7 @@ export default function SigninForm() {
         <button
           type={"submit"}
           className={"signin-form-submit-button"}
-          disabled={!username || !password}
+          disabled={!emailOrUsername || !password}
         >
           Sign in
         </button>
