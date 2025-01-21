@@ -1,7 +1,9 @@
+"use client";
+
 import "./challengeTypeCard.css";
 import ChallengeCard from "@/components/challenge-card/challengeCard";
 import { ChallengeCardTypeEnums } from "@/public/enums/ChallengeCardEnums";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 
 interface ChallengeTypeCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
