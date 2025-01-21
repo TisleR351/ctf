@@ -26,23 +26,24 @@
 
 .dropdown-menu {
     position: absolute;
-    top: 100%;
     left: 0;
     width: 100%;
     background: var(--achromatic-0);
     color: var(--primary-8);
-    border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
 
 .dropdown-option {
+    display: flex;
+    gap: 1vw;
     padding: 10px;
     font-size: var(--font-size-small);
     cursor: pointer;
 }
 
 .dropdown-option:hover {
-    background-color: var(--achromatic-0);
+    background-color: var(--primary-8);
+    color: var(--achromatic-0);
 }
