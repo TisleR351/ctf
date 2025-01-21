@@ -46,7 +46,6 @@ export default function SigninForm() {
         setMessage("");
       }
     } catch (err) {
-      console.error("Sign-in error:", err);
       setError("Something went wrong. Please try again later.");
       setMessage("");
     }
