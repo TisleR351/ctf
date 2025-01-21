@@ -1,0 +1,23 @@
+.message-container {
+    height: 5vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.message-container.bg-primary {
+    background-color: var(--primary-1);
+}
+
+.message-container.bg-neutral {
+    background-color: var(--achromatic-2);
+}
+
+.message-container.bg-success {
+    background-color: var(--success);
+}
+
+.message-container.bg-error {
+    background-color: var(--error);
+}

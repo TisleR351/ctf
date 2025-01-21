@@ -48,17 +48,14 @@
   --tertiary-8: #4D000D;
   --tertiary-9: #1A0004;
 
-  --correct: #BDF5BD;
-  --available: #b3f9ff;
-  --neutral: #cacaca;
+  --success: #BDF5BD;
+  --error: #f5bdbd;
 
-  --correct-hover: #82aa82;
-  --available-hover: #7cafb3;
-  --neutral-hover: #888888;
+  --success-hover: #82aa82;
+  --error-hover: #aa8282;
 
-  --font-correct: #4d634d;
-  --font-available: #5c8083;
-  --font-neutral: #504f4f;
+  --font-success: #4d634d;
+  --font-error: #634d4d;
 
   --font-size-xxlarge: 80px;
   --font-size-xlarge: 60px;

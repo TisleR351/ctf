@@ -1,4 +1,4 @@
-.signup-form-container {
+.signin-form-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -8,34 +8,50 @@
     justify-content: center;
     align-items: center;
     width: 50%;
-    height: 90%;
+    height: 80%;
     background-color: var(--achromatic-0);
     gap: 5%;
 }
 
-.signup-form-title {
+.signin-form-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    gap: 4vh;
+}
+.signin-form-title {
+    text-align: center;
     font-size: var(--font-size-xxlarge);
 }
 
-.signup-form-submit-button-link {
+.signin-form-submit-button-link {
     width: 80%;
 }
 
-.signup-form-submit-button {
+.signin-form-submit-button {
     width: 100%;
     height: 6vh;
     background-color: var(--primary-9);
     color: var(--achromatic-0);
     font-size: var(--font-size-medium);
+    justify-content: center;
+    align-items: center;
 }
 
-.signup-form-submit-button:hover {
+.signin-form-submit-button:hover {
     color: var(--achromatic-0);
     background-color: var(--primary-8);
     transform: scale(1.01);
 }
 
-.signup-form-submit-button:active {
+.signin-form-submit-button:active {
     background-color: var(--primary-8);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.signin-form-forgotten-password {
+    width: 80%;
+    color: var(--primary-6);
+    font-size: var(--font-size-small);
 }

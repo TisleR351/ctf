@@ -1,5 +1,5 @@
 export enum ChallengeCardTypeEnums {
-  AVAILABLE = "available",
-  CORRECT = "correct",
+  PRIMARY = "primary",
+  SUCCESS = "success",
   NEUTRAL = "neutral",
 }

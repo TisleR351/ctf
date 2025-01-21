@@ -2,9 +2,13 @@
     display: flex;
     flex-direction: column;
     height: 10vh;
-    width: 80%;
+    width: 100%;
     color: var(--primary-9);
     gap: 20%;
+}
+
+.signup-form-group-input.error {
+    color: var(--tertiary-5)
 }
 
 .signup-form-input {
@@ -14,4 +18,9 @@
     height: 100%;
     width: 100%;
     border: solid 1px var(--primary-9);
+}
+
+.signup-form-input.error {
+    border: 1px solid var(--tertiary-5);
+    background-color: var(--tertiary-0);
 }

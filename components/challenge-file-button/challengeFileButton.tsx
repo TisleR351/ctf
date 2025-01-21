@@ -15,6 +15,7 @@ export function ChallengeFileButton({
     <button
       className={`challenge-file-button ${className || ""}`.trim()}
       disabled={!isConnected}
+      {...props}
     >
       <i className={`zip-icon fa-solid fa-file-zipper`}></i>
       FileName.zip

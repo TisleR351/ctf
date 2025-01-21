@@ -24,28 +24,28 @@
 }
 
 .challenge-card.bg-neutral {
-    color: var(--font-neutral);
-    background: var(--neutral);
+    color: var(--achromatic-6);
+    background: var(--achromatic-2);
     pointer-events: none;
     cursor: pointer;
 }
 
-.challenge-card.bg-available {
-    color: var(--font-available);
-    background: var(--available);
+.challenge-card.bg-primary {
+    color: var(--primary-7);
+    background: var(--primary-1);
 }
 
-.challenge-card.bg-available:hover {
-    background: var(--available-hover);
+.challenge-card.bg-primary:hover {
+    background: var(--primary-2);
     transform: scale(1.02);
 }
 
-.challenge-card.bg-correct {
-    color: var(--font-correct);
-    background: var(--correct);
+.challenge-card.bg-success {
+    color: var(--font-success);
+    background: var(--success);
 }
 
-.challenge-card.bg-correct:hover {
-    background: var(--correct-hover);
+.challenge-card.bg-success:hover {
+    background: var(--success-hover);
     transform: scale(1.02);
 }

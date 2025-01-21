@@ -2,11 +2,11 @@
 
 import "./challengeModal.css";
 
-import { ChallengeModalMessage } from "@/components/challenge-modal-message/challengeModalMessage";
+import { Message } from "@/components/message/message";
 import { ChallengeFileButton } from "@/components/challenge-file-button/challengeFileButton";
 import ChallengeModalForm from "@/components/challenge-modal-form/challengeModalForm";
 import React, { HTMLAttributes, useState } from "react";
-import { ChallengeModalMessageEnums } from "@/public/enums/ChallengeModalMessageEnums";
+import { MessageEnums } from "@/public/enums/MessageEnums";
 import ModalWindow from "@/modules/modal-window/challengeModal";
 
 interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
@@ -24,11 +24,11 @@ export default function ChallengeModal({
   const [flag, setFlag] = useState("This is the flag");
 
   if (isConnected && flag) {
-    type = ChallengeModalMessageEnums.CORRECT;
-    message = "You already solve this challenge.";
+    type = MessageEnums.SUCCESS;
+    message = "You already solved this challenge.";
   } else if (!isConnected) {
     message = "You have to login before trying to solve a challenge.";
-    type = ChallengeModalMessageEnums.NEUTRAL;
+    type = MessageEnums.NEUTRAL;
   }
   return (
     <ModalWindow isOpen={isOpen} onCloseAction={onCloseAction}>
@@ -47,7 +47,7 @@ export default function ChallengeModal({
       <div className="challenge-modal-content-author">
         <strong>Author: </strong>TisleR351
       </div>
-      {type && <ChallengeModalMessage type={type} message={message} />}
+      {type && <Message type={type} message={message} />}
       <ChallengeFileButton isConnected={isConnected} />
       <ChallengeModalForm flag={flag} isConnected={isConnected} />
     </ModalWindow>
