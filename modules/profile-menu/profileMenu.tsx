@@ -17,7 +17,6 @@ export default function ProfileMenu() {
 
   return (
     <>
-      {isAdmin && pathname === "/challenge" && <CreateChallengeSection />}
       <motion.div
         className="sub-menu"
         layout

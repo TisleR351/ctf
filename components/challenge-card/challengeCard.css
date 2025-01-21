@@ -10,7 +10,7 @@
 }
 
 .challenge-card-title {
-    font-size: var(--font-size-medium1);
+    font-size: var(--font-size-medium2);
     padding-top: 3vw;
     padding-right: 3vw;
     padding-left: 3vw;
@@ -19,7 +19,7 @@
 
 .challenge-card-credits {
     padding: 2vw;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-small1);
     text-transform: uppercase;
 }
 

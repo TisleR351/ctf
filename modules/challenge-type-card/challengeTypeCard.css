@@ -6,14 +6,14 @@
 .challenge-type-card-title {
     padding-top: 2vh;
     padding-left: 3vw;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-medium);
     text-transform: uppercase;
     color: var(--primary-8)
 }
 
 .challenge-card-container {
     display: grid;
-    gap: 1vw;
+    gap: 0vw;
     grid-template-columns: repeat(5, 1fr);
 }
 
