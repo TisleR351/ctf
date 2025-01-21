@@ -34,7 +34,7 @@ export default function Countdown() {
     };
 
     const interval = setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initialisation immédiate
+    updateCountdown();
 
     return () => clearInterval(interval); // Nettoyage à la fin
   }, []);

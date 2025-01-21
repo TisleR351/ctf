@@ -18,10 +18,10 @@ export default function ChallengeTypeCard({
     <div className={"challenge-type-card-container"} {...props}>
       <p className={"challenge-type-card-title"}>{title}</p>
       <div className={"challenge-card-container"}>
-        <ChallengeCard type={ChallengeCardTypeEnums.CORRECT} />
+        <ChallengeCard type={ChallengeCardTypeEnums.SUCCESS} />
         <ChallengeCard type={ChallengeCardTypeEnums.NEUTRAL} />
-        <ChallengeCard type={ChallengeCardTypeEnums.AVAILABLE} />
-        <ChallengeCard type={ChallengeCardTypeEnums.CORRECT} />
+        <ChallengeCard type={ChallengeCardTypeEnums.PRIMARY} />
+        <ChallengeCard type={ChallengeCardTypeEnums.SUCCESS} />
         <ChallengeCard type={ChallengeCardTypeEnums.NEUTRAL} />
       </div>
     </div>
