@@ -66,7 +66,12 @@ export default function ChallengeModal({
       <div className="challenge-modal-content-title">{challenge.name}</div>
       <div className="challenge-modal-content-credits">{challenge.points}</div>
       <div className="challenge-modal-content-description">
-        {challenge.description}
+        {challenge.description.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
       </div>
       <div className="challenge-modal-content-author">
         <strong>Author: </strong>
