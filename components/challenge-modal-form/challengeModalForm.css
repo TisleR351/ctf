@@ -42,3 +42,7 @@
     background-color: var(--primary-9);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.challenge-modal-form-flag-input {
+    height: 6vh;
+}

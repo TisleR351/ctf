@@ -5,7 +5,7 @@ import "./page.css";
 import React, { useEffect, useState } from "react";
 import ChallengeTypeCard from "@/modules/challenge-type-card/challengeTypeCard";
 import BaseLayout from "@/modules/layout/layout";
-import { CategoryGroup } from "@/public/types/challenge";
+import { CategoryGroup } from "@/utils/types/challenge";
 
 export default function Challenge() {
   const [categories, setCategories] = useState<CategoryGroup[]>([]);

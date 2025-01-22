@@ -23,6 +23,7 @@ export default function ChallengeModalForm({
         type={"text"}
         disabled={!isConnected || !!flag}
         placeholder={flag && flag}
+        className={"challenge-modal-form-flag-input"}
       />
       <button
         type={"submit"}

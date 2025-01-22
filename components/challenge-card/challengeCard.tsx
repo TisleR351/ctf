@@ -1,16 +1,19 @@
 "use client";
 import "./challengeCard.css";
-import { HTMLProps, useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import { ChallengeCardTypeEnums } from "@/utils/enums/ChallengeCardEnums";
 import ChallengeModal from "@/modules/challenge-modal/challengeModal";
+import { Challenge } from "@/utils/types/challenge";
 
-interface ChallengeCardProps extends HTMLProps<HTMLButtonElement> {
+interface ChallengeCardProps extends HTMLAttributes<HTMLButtonElement> {
+  challenge: Challenge;
   type: ChallengeCardTypeEnums;
   className?: string;
 }
 
 export default function ChallengeCard({
   type,
+  challenge,
   className,
   ...props
 }: ChallengeCardProps) {
@@ -31,12 +34,16 @@ export default function ChallengeCard({
         {...props}
         onClick={handleCardClick}
       >
-        <div className="challenge-card-title">The lost park</div>
-        <div className="challenge-card-credits">75 pts</div>
+        <div className="challenge-card-title">{challenge.name}</div>
+        <div className="challenge-card-credits">{challenge.points}</div>
       </button>
 
       {isModalOpen && (
-        <ChallengeModal isOpen={isModalOpen} onCloseAction={closeModal} />
+        <ChallengeModal
+          isOpen={isModalOpen}
+          onCloseAction={closeModal}
+          challenge={challenge}
+        />
       )}
     </>
   );
