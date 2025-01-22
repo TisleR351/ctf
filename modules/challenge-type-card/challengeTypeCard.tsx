@@ -3,15 +3,18 @@
 import "./challengeTypeCard.css";
 import ChallengeCard from "@/components/challenge-card/challengeCard";
 import { ChallengeCardTypeEnums } from "@/public/enums/ChallengeCardEnums";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes } from "react";
+import { Challenge } from "@/public/types/challenge";
 
 interface ChallengeTypeCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   className?: string;
+  challenges: Challenge[];
 }
 
 export default function ChallengeTypeCard({
   title,
+  challenges,
   ...props
 }: ChallengeTypeCardProps) {
   return (

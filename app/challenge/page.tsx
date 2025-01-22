@@ -1,38 +1,63 @@
-import "./page.css";
-import React from "react";
-import Countdown from "@/components/countdown/countdown";
-import Image from "next/image";
-import discord from "@/public/discord.png";
-import ectf_logo from "@/public/ectf_logo.png";
-import BaseLayout from "@/modules/layout/layout";
-import Link from "next/link";
+"use client";
 
-export default function AboutUsPage() {
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./page.css";
+import React, { useEffect, useState } from "react";
+import ChallengeTypeCard from "@/modules/challenge-type-card/challengeTypeCard";
+import BaseLayout from "@/modules/layout/layout";
+import { CategoryGroup } from "@/public/types/challenge";
+
+export default function Challenge() {
+  const [categories, setCategories] = useState<CategoryGroup[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/challenge?group_by=category");
+        if (!response.ok) {
+          throw new Error("Failed to fetch challenges");
+        }
+
+        const data: CategoryGroup[] = await response.json();
+        setCategories(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return (
+      <BaseLayout>
+        <div className="loading">Loading challenges...</div>
+      </BaseLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <BaseLayout>
+        <div className="error">{error}</div>
+      </BaseLayout>
+    );
+  }
+
   return (
     <BaseLayout>
-      <Image
-        src={ectf_logo}
-        alt="ECTF Logo"
-        width={250}
-        height={100}
-        className="about-us-logo"
-      />
-      <div className="about-us-title">Welcome to ECTF25</div>
-      <Countdown />
-      <div className="about-us-info">
-        The website is not available to the public yet, join our Discord to get
-        notified when registrations are available.
-      </div>
-      <div className={"discord-link"}>
-        <Link href="https://discord.gg/3kH63ckmeb" target="_blank">
-          <Image
-            src={discord}
-            alt="Join Discord"
-            width={250}
-            height={40}
-            className="about-us-discord-button"
+      <div className={"challenges-container"}>
+        {categories.map((categoryGroup) => (
+          <ChallengeTypeCard
+            key={categoryGroup.category}
+            title={categoryGroup.category}
+            challenges={categoryGroup.challenges}
           />
-        </Link>
+        ))}
       </div>
     </BaseLayout>
   );
