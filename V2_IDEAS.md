@@ -20,6 +20,9 @@ As part of the evolution of our ESIG-CTF (E-CTF) project, here is a list of impr
     - Enhanced authentication.
 
 ### 3. Barre latérale du text-area du formulaire de création d'un challenge
+### 4. Possibilité de créer une équipe
+### 5. Possibilité de s'enregistrer dans une équipe
+### 5. Possibilité d'enregistrer un flag
 
 ---
 

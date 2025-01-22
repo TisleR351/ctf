@@ -8,12 +8,14 @@ import { ChallengeCardTypeEnums } from "@/utils/enums/ChallengeCardEnums";
 
 interface ChallengeTypeCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
+  isLoggedIn: boolean;
   className?: string;
   challenges: Challenge[];
 }
 
 export default function ChallengeTypeCard({
   title,
+  isLoggedIn,
   challenges,
   ...props
 }: ChallengeTypeCardProps) {
@@ -24,7 +26,11 @@ export default function ChallengeTypeCard({
         {challenges.map((challenge) => (
           <ChallengeCard
             key={challenge._id}
-            type={ChallengeCardTypeEnums.PRIMARY}
+            type={
+              isLoggedIn
+                ? ChallengeCardTypeEnums.PRIMARY
+                : ChallengeCardTypeEnums.NEUTRAL
+            }
             challenge={challenge}
           />
         ))}
