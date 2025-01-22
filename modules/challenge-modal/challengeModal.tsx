@@ -5,51 +5,76 @@ import "./challengeModal.css";
 import { Message } from "@/components/message/message";
 import { ChallengeFileButton } from "@/components/challenge-file-button/challengeFileButton";
 import ChallengeModalForm from "@/components/challenge-modal-form/challengeModalForm";
-import React, { HTMLAttributes, useState } from "react";
+import React, { HTMLAttributes, useEffect, useState } from "react";
 import { MessageEnums } from "@/utils/enums/MessageEnums";
 import ModalWindow from "@/modules/modal-window/challengeModal";
+import { Challenge } from "@/utils/types/challenge";
 
 interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   onCloseAction: () => void;
+  challenge: Challenge;
 }
 
 export default function ChallengeModal({
   isOpen,
   onCloseAction,
+  challenge,
 }: ChallengeModalProps) {
   let type;
   let message;
-  const [isConnected, setIsConnected] = useState(true);
+  const [isPartOfTeam, setIsPartOfTeam] = useState(false);
   const [flag, setFlag] = useState("This is the flag");
 
-  if (isConnected && flag) {
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const isConnected = !!token;
+
+    if (isConnected) {
+      fetch("/api/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch user info.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setIsPartOfTeam(!!data.user.team);
+        });
+    } else {
+      setIsPartOfTeam(false);
+    }
+  }, []);
+
+  if (isPartOfTeam && flag) {
     type = MessageEnums.SUCCESS;
     message = "You already solved this challenge.";
-  } else if (!isConnected) {
-    message = "You have to login before trying to solve a challenge.";
+  } else if (!isPartOfTeam) {
+    message =
+      "You have to be part of a team before trying to solve a challenge.";
     type = MessageEnums.NEUTRAL;
   }
+
   return (
     <ModalWindow isOpen={isOpen} onCloseAction={onCloseAction}>
-      <div className="challenge-modal-content-title">The lost park</div>
-      <div className="challenge-modal-content-credits">75 pts</div>
+      <div className="challenge-modal-content-title">{challenge.name}</div>
+      <div className="challenge-modal-content-credits">{challenge.points}</div>
       <div className="challenge-modal-content-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-        pulvinar, purus vitae cursus sollicitudin, enim erat bibendum sapien, at
-        tincidunt massa purus eget nulla. Nullam auctor purus sit amet neque
-        efficitur facilisis. Donec id purus facilisis, dapibus mi et, suscipit
-        metus. Etiam maximus ipsum odio, non sodales arcu rhoncus ut. Donec sit
-        amet neque eleifend lectus commodo mattis eget id nibh. Aenean eget
-        cursus lectus, feugiat interdum ex. Vestibulum ante ipsum primis in
-        faucibus nec.
+        {challenge.description}
       </div>
       <div className="challenge-modal-content-author">
-        <strong>Author: </strong>TisleR351
+        <strong>Author: </strong>
+        {challenge.author}
       </div>
       {type && <Message type={type} message={message} />}
-      <ChallengeFileButton isConnected={isConnected} />
-      <ChallengeModalForm flag={flag} isConnected={isConnected} />
+      <ChallengeFileButton isConnected={isPartOfTeam} />
+      <ChallengeModalForm flag={flag} isConnected={isPartOfTeam} />
     </ModalWindow>
   );
 }
