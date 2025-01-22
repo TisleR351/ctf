@@ -4,16 +4,16 @@ import "./profileMenu.css";
 import Divider from "@/components/divider/divider";
 import ProfileDropdown from "@/components/profile-dropdown/profileDropdown";
 import ProfileCredits from "@/components/profile-credits/profileCredits";
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import { motion } from "framer-motion";
-import { CreateChallengeSection } from "@/modules/create-challenge-section/createChallengeSection";
-import { usePathname } from "next/navigation";
 
-export default function ProfileMenu() {
-  const [name, setName] = useState("MR");
-  const [isAdmin, setIsAdmin] = useState(true);
-  const pathname = usePathname();
+interface ProfileMenuProps extends HTMLAttributes<HTMLDivElement> {
+  name: string;
+}
+
+export default function ProfileMenu({ name }: ProfileMenuProps) {
   const [isDropDownOpened, setIsDropDownOpened] = useState(false);
+  const [displayedName, setDisplayedName] = useState<string>(name);
 
   return (
     <>
@@ -21,17 +21,17 @@ export default function ProfileMenu() {
         className="sub-menu"
         layout
         onMouseEnter={() => {
-          setName("Mathis RANSON");
+          setDisplayedName(name);
         }}
         onMouseLeave={() => {
-          setName("MR");
+          setDisplayedName("Me");
           setIsDropDownOpened(false);
         }}
       >
         <ProfileCredits />
         <Divider direction="vertical" className="sub-menu-divider" />
         <ProfileDropdown
-          name={name}
+          name={displayedName}
           setIsOpenAction={setIsDropDownOpened}
           isOpen={isDropDownOpened}
         />

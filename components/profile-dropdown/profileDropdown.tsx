@@ -22,7 +22,31 @@ export default function ProfileDropdown({
   name += " ▼";
   const letters = name.split("");
 
-  const dropdownOptions = ["Option 1", "Option 2", "Option 3"];
+  const dropdownOptions = [
+    {
+      label: "Idk",
+      onClick: () => {
+        setIsOpenAction(false);
+      },
+      icon: "fa-vials",
+    },
+    {
+      label: "CTF",
+      onClick: () => {
+        setIsOpenAction(false);
+      },
+      icon: "fa-vials",
+    },
+    {
+      label: "Sign out",
+      onClick: () => {
+        setIsOpenAction(false);
+        sessionStorage.removeItem("token");
+        window.location.reload();
+      },
+      icon: "fa-sign-out",
+    },
+  ];
 
   return (
     <div className="profile-button-container">
@@ -33,7 +57,7 @@ export default function ProfileDropdown({
         {...props}
       >
         <motion.div key={name} layout ref={textRef}>
-          {letters.map((letter, index) => (
+          {letters?.map((letter, index) => (
             <motion.span
               key={index}
               initial={{ opacity: 0 }}
@@ -66,13 +90,11 @@ export default function ProfileDropdown({
           >
             {dropdownOptions.map((option) => (
               <motion.div
-                key={option}
+                key={option.label}
                 className="dropdown-option"
-                onClick={() => {
-                  setIsOpenAction(false);
-                }}
+                onClick={option.onClick}
               >
-                {option}
+                {option.label}
               </motion.div>
             ))}
           </motion.div>
