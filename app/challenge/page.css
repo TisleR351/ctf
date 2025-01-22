@@ -1,4 +1,8 @@
 .about-us-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     font-size: var(--font-size-large);
     width: 100%;
     max-width: 600px;
@@ -8,10 +12,10 @@
 }
 
 .about-us-logo {
+    margin: 0 auto;
     width: 250px;
     height: auto;
     display: block;
-    margin: 0 auto 20px;
 }
 
 .about-us-title {
@@ -29,7 +33,10 @@
 }
 
 .about-us-discord-button {
-    height: auto;
     display: block;
+}
+
+.discord-link {
     margin: 0 auto;
+    width: 250px;
 }

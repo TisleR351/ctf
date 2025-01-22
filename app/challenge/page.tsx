@@ -1,13 +1,13 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./page.css";
 import React from "react";
-import BaseLayout from "@/modules/layout/layout";
-import Image from "next/image";
-import ectf_logo from "@/public/ectf_logo.png";
 import Countdown from "@/components/countdown/countdown";
+import Image from "next/image";
 import discord from "@/public/discord.png";
+import ectf_logo from "@/public/ectf_logo.png";
+import BaseLayout from "@/modules/layout/layout";
+import Link from "next/link";
 
-export default function Challenge() {
+export default function AboutUsPage() {
   return (
     <BaseLayout>
       <Image
@@ -23,19 +23,17 @@ export default function Challenge() {
         The website is not available to the public yet, join our Discord to get
         notified when registrations are available.
       </div>
-      <a
-        href="https://discord.gg/3kH63ckmeb"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src={discord}
-          alt="Join Discord"
-          width={250}
-          height={40}
-          className="about-us-discord-button"
-        />
-      </a>
+      <div className={"discord-link"}>
+        <Link href="https://discord.gg/3kH63ckmeb" target="_blank">
+          <Image
+            src={discord}
+            alt="Join Discord"
+            width={250}
+            height={40}
+            className="about-us-discord-button"
+          />
+        </Link>
+      </div>
     </BaseLayout>
   );
 }
