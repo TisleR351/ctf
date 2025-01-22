@@ -1,6 +1,12 @@
 import MenuButton from "@/components/menu-button/menuButton";
 import "./mainMenu.css";
 import Divider from "@/components/divider/divider";
+import {
+  faFlag,
+  faSortAmountUp,
+  faUserGraduate,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Logo() {
   return <p>CTF</p>;
@@ -14,20 +20,12 @@ export default function MainMenu() {
       </div>
       <Divider direction="horizontal" />
       <div className="main-menu-content">
-        <MenuButton icon="fa-flag" tooltip="Challenge" href={"/challenge"} />
-        <MenuButton
-          icon="fa-sort-amount-up-alt"
-          tooltip="Ranking"
-          href={"/ranking"}
-        />
-        <MenuButton icon="fa-users" tooltip="Teams" href={"/teams"} />
+        <MenuButton icon={faFlag} tooltip="Challenge" href={"/challenge"} />
+        <MenuButton icon={faSortAmountUp} tooltip="Ranking" href={"/ranking"} />
+        <MenuButton icon={faUsers} tooltip="Teams" href={"/teams"} />
       </div>
       <Divider direction="horizontal" />
-      <MenuButton
-        icon="fa-user-graduate"
-        tooltip="About us"
-        href={"/about-us"}
-      />
+      <MenuButton icon={faUserGraduate} tooltip="About us" href={"/about-us"} />
     </div>
   );
 }

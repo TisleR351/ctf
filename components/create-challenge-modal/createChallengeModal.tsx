@@ -4,6 +4,7 @@ import ModalWindow from "@/modules/modal-window/challengeModal";
 import MainInput from "@/components/main-input/mainInput";
 import MainTextArea from "@/components/main-text-area/mainTextArea";
 import MainButton from "@/components/main-button/mainButton";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 interface CreateChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -37,7 +38,7 @@ export default function CreateChallengeModal({
           className={"file-url-input"}
         />
         <MainInput label={"Flag"} type={"text"} className={"flag-input"} />
-        <MainButton icon={"fa-save"} label={"Save"} className={"save-button"} />
+        <MainButton icon={faSave} label={"Save"} className={"save-button"} />
       </div>
     </ModalWindow>
   );

@@ -2,10 +2,12 @@
 import "./loginMenuButton.css";
 import { ButtonHTMLAttributes } from "react";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 interface LoginMenuButtonAttributes
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: string;
+  icon: IconDefinition;
   label: string;
   href: string;
   className?: string;
@@ -24,7 +26,12 @@ export default function LoginMenuButton({
         className={`login-menu-button ${className || ""}`.trim()}
         {...props}
       >
-        <i className={`login-menu-button-icon icon fa ${icon}`}></i>
+        <FontAwesomeIcon
+          icon={icon}
+          width={30}
+          height={30}
+          className={"login-menu-button-icon"}
+        />
         <div>{label}</div>
       </button>
     </Link>
