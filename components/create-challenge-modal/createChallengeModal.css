@@ -20,6 +20,11 @@
     font-size: var(--font-size-small);
 }
 
+.author-input {
+    height: 8vh;
+    font-size: var(--font-size-small);
+}
+
 .credits-input {
     height: 8vh;
     font-size: var(--font-size-small);

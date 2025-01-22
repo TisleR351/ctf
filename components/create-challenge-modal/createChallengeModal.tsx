@@ -23,6 +23,7 @@ export default function CreateChallengeModal({
   const [title, setTitle] = useState("");
   const [credits, setCredits] = useState(100);
   const [description, setDescription] = useState("");
+  const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("Hardware");
   const [fileUrl, setFileUrl] = useState("");
   const [flag, setFlag] = useState("");
@@ -59,6 +60,7 @@ export default function CreateChallengeModal({
           name: title,
           category,
           description,
+          author,
           points: credits,
           flag,
           file_url: fileUrl,
@@ -67,16 +69,16 @@ export default function CreateChallengeModal({
 
       if (!response.ok) {
         const data = await response.json();
-        console.log(data);
         setError(data.error || "Failed to create challenge.");
         return;
       }
 
       setSuccess(true);
       setTitle("");
-      setCredits(0);
+      setCredits(100);
       setDescription("");
-      setCategory("");
+      setAuthor("");
+      setCategory("Hardware");
       setFileUrl("");
       setFlag("");
       onCloseAction();
@@ -137,6 +139,13 @@ export default function CreateChallengeModal({
           value={fileUrl}
           onChange={(e) => setFileUrl(e.target.value)}
           className={"file-url-input"}
+        />
+        <MainInput
+          label={"Author"}
+          type={"text"}
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          className={"author-input"}
         />
         <MainInput
           label={"Flag"}

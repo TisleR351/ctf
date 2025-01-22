@@ -6,6 +6,7 @@ interface Challenge {
   category: string;
   description: string;
   points: number;
+  author: string;
   flag: string[];
   file_url: string;
 }
@@ -38,13 +39,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, category, description, points, flag, file_url } =
+    const { name, category, description, points, flag, file_url, author } =
       await request.json();
 
     if (
       !name ||
       !category ||
       !description ||
+      !author ||
       points == null ||
       !flag ||
       !file_url
@@ -77,6 +79,7 @@ export async function POST(request: Request) {
     const newChallenge: Challenge = {
       name,
       category,
+      author,
       description,
       points,
       flag: flags,
