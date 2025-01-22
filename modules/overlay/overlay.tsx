@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 export default function Overlay() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState<string>("Me");
+  const [points, setPoints] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState(false);
   const pathname = usePathname();
 
@@ -36,6 +37,7 @@ export default function Overlay() {
         .then((data) => {
           setIsAdmin(data.user?.role === 10000);
           setName(data.user?.username);
+          setPoints(data.user?.points);
         });
     } else {
       setIsAdmin(false);
@@ -49,7 +51,11 @@ export default function Overlay() {
       </div>
       <div className="sub-menu-container">
         {isAdmin && pathname === "/challenge" && <CreateChallengeSection />}
-        {isLoggedIn ? <ProfileMenu name={name} /> : <LoginMenu />}
+        {isLoggedIn ? (
+          <ProfileMenu name={name} points={points} />
+        ) : (
+          <LoginMenu />
+        )}
       </div>
     </div>
   );
