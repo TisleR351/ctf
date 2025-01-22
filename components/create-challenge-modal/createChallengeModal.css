@@ -15,6 +15,11 @@
     font-size: var(--font-size-small);
 }
 
+.category-input {
+    height: 8vh;
+    font-size: var(--font-size-small);
+}
+
 .credits-input {
     height: 8vh;
     font-size: var(--font-size-small);
@@ -32,4 +37,8 @@
 
 .save-button {
     border: 1px solid var(--primary-8)
+}
+
+.create-challenge-message {
+    font-weight: initial;
 }
