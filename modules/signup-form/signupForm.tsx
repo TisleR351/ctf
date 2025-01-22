@@ -4,7 +4,7 @@ import "./signupForm.css";
 
 import React, { useState } from "react";
 import { Message } from "@/components/message/message";
-import { MessageEnums } from "@/public/enums/MessageEnums";
+import { MessageEnums } from "@/utils/enums/MessageEnums";
 import SignupFormInput from "@/components/signup-form-input/signupFormInput";
 
 export default function SignupForm() {
