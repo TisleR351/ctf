@@ -1,4 +1,4 @@
-.main-input-container {
+.main-select-container {
     width: 100%;
     gap: 1vh;
     display: flex;
@@ -6,17 +6,20 @@
     justify-content: center;
 }
 
-.main-input {
+.main-select {
     font-size: var(--font-size-small);
     font-weight: initial;
     border: solid 1px var(--primary-8);
     padding-left: 3%;
     padding-right: 3%;
-    width: 100%;
     height: 100%;
+    width: 100%;
+    background-color: white;
+    color: var(--primary-9);
 }
 
-.main-input:disabled {
+.main-select:disabled {
     border: solid 1px var(--achromatic-5);
     color: var(--achromatic-5);
+    background-color: var(--achromatic-2);
 }
