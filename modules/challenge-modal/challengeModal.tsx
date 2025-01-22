@@ -9,6 +9,7 @@ import React, { HTMLAttributes, useEffect, useState } from "react";
 import { MessageEnums } from "@/utils/enums/MessageEnums";
 import ModalWindow from "@/modules/modal-window/challengeModal";
 import { Challenge } from "@/utils/types/challenge";
+import Link from "next/link";
 
 interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -78,8 +79,12 @@ export default function ChallengeModal({
         {challenge.author}
       </div>
       {type && <Message type={type} message={message} />}
-      <ChallengeFileButton isConnected={isPartOfTeam} />
-      <ChallengeModalForm flag={flag} isConnected={isPartOfTeam} />
+      <div className={"challenge-file-button-link"}>
+        <Link href={`/challenge-directory/${challenge.file_url}`}>
+          <ChallengeFileButton isPartOfTeam={isPartOfTeam} />
+        </Link>
+      </div>
+      <ChallengeModalForm flag={flag} isPartOfTeam={isPartOfTeam} />
     </ModalWindow>
   );
 }

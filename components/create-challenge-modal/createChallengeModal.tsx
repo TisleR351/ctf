@@ -134,7 +134,7 @@ export default function CreateChallengeModal({
           className={"category-input"}
         />
         <MainInput
-          label={"File URL"}
+          label={"File name"}
           type={"text"}
           value={fileUrl}
           onChange={(e) => setFileUrl(e.target.value)}

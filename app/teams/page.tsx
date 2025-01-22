@@ -1,3 +1,5 @@
+"use client";
+
 import "./page.css";
 import React from "react";
 import Countdown from "@/components/countdown/countdown";

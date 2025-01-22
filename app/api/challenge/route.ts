@@ -11,59 +11,6 @@ interface Challenge {
   file_url: string;
 }
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const groupBy = url.searchParams.get("group_by");
-
-  try {
-    const db = await getDb();
-
-    if (groupBy === "category") {
-      const groupedChallenges = await db
-        .collection("challenge")
-        .aggregate([
-          {
-            $group: {
-              _id: "$category",
-              challenges: { $push: "$$ROOT" },
-            },
-          },
-          { $project: { _id: 0, category: "$_id", challenges: 1 } },
-          {
-            $addFields: {
-              challenges: {
-                $map: {
-                  input: "$challenges",
-                  as: "challenge",
-                  in: {
-                    _id: "$$challenge._id",
-                    name: "$$challenge.name",
-                    category: "$$challenge.category",
-                    description: "$$challenge.description",
-                    points: "$$challenge.points",
-                    file_url: "$$challenge.file_url",
-                  },
-                },
-              },
-            },
-          },
-        ])
-        .toArray();
-
-      return NextResponse.json(groupedChallenges, { status: 200 });
-    }
-
-    const challenges = await db
-      .collection("challenge")
-      .find({}, { projection: { flag: 0 } })
-      .toArray();
-
-    return NextResponse.json(challenges, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
-  }
-}
-
 export async function POST(request: Request) {
   const authHeader = request.headers.get("Authorization");
 
