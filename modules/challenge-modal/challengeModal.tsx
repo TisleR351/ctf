@@ -6,7 +6,7 @@ import { Message } from "@/components/message/message";
 import { ChallengeFileButton } from "@/components/challenge-file-button/challengeFileButton";
 import ChallengeModalForm from "@/components/challenge-modal-form/challengeModalForm";
 import React, { HTMLAttributes, useState } from "react";
-import { MessageEnums } from "@/public/enums/MessageEnums";
+import { MessageEnums } from "@/utils/enums/MessageEnums";
 import ModalWindow from "@/modules/modal-window/challengeModal";
 
 interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {

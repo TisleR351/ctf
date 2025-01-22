@@ -9,7 +9,7 @@ import MainButton from "@/components/main-button/mainButton";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import MainSelect from "@/components/main-select/mainSelect";
 import { Message } from "@/components/message/message";
-import { MessageEnums } from "@/public/enums/MessageEnums";
+import { MessageEnums } from "@/utils/enums/MessageEnums";
 
 interface CreateChallengeModalProps {
   isOpen: boolean;

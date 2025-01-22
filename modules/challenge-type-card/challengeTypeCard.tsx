@@ -2,7 +2,7 @@
 
 import "./challengeTypeCard.css";
 import ChallengeCard from "@/components/challenge-card/challengeCard";
-import { ChallengeCardTypeEnums } from "@/public/enums/ChallengeCardEnums";
+import { ChallengeCardTypeEnums } from "@/utils/enums/ChallengeCardEnums";
 import { HTMLAttributes, useEffect, useState } from "react";
 
 interface ChallengeTypeCardProps extends HTMLAttributes<HTMLDivElement> {

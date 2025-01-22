@@ -1,6 +1,6 @@
 import "./message.css";
 import { HTMLAttributes } from "react";
-import { MessageEnums } from "@/public/enums/MessageEnums";
+import { MessageEnums } from "@/utils/enums/MessageEnums";
 
 interface ChallengeModalMessageProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;

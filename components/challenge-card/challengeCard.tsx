@@ -1,7 +1,7 @@
 "use client";
 import "./challengeCard.css";
 import { HTMLProps, useState } from "react";
-import { ChallengeCardTypeEnums } from "@/public/enums/ChallengeCardEnums";
+import { ChallengeCardTypeEnums } from "@/utils/enums/ChallengeCardEnums";
 import ChallengeModal from "@/modules/challenge-modal/challengeModal";
 
 interface ChallengeCardProps extends HTMLProps<HTMLButtonElement> {
