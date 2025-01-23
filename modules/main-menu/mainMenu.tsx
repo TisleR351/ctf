@@ -20,7 +20,7 @@ export default function MainMenu() {
       </div>
       <Divider direction="horizontal" />
       <div className="main-menu-content">
-        <MenuButton icon={faFlag} tooltip="Challenge" href={"/challenge"} />
+        <MenuButton icon={faFlag} tooltip="Challenges" href={"/challenges"} />
         <MenuButton icon={faSortAmountUp} tooltip="Ranking" href={"/ranking"} />
         <MenuButton icon={faUsers} tooltip="Teams" href={"/teams"} />
       </div>

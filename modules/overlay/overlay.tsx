@@ -7,12 +7,15 @@ import ProfileMenu from "@/modules/profile-menu/profileMenu";
 import LoginMenu from "@/components/login-menu/loginMenu";
 import { CreateChallengeSection } from "@/modules/create-challenge-section/createChallengeSection";
 import { usePathname } from "next/navigation";
+import { CreateTeamSection } from "@/modules/create-team-section/createTeamSection";
+import { JoinTeamSection } from "@/modules/join-team-section/joinTeamSection";
 
 export default function Overlay() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState<string>("Me");
   const [points, setPoints] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isPartOfTeam, setIsPartOfTeam] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,6 +41,7 @@ export default function Overlay() {
           setIsAdmin(data.user?.role === 10000);
           setName(data.user?.username);
           setPoints(data.user?.points);
+          setIsPartOfTeam(!!data.user?.team);
         });
     } else {
       setIsAdmin(false);
@@ -50,7 +54,13 @@ export default function Overlay() {
         <MainMenu />
       </div>
       <div className="sub-menu-container">
-        {isAdmin && pathname === "/challenge" && <CreateChallengeSection />}
+        {isAdmin && pathname === "/challenges" && <CreateChallengeSection />}
+        {isLoggedIn && !isPartOfTeam && pathname === "/teams" && (
+          <>
+            <JoinTeamSection />
+            <CreateTeamSection />
+          </>
+        )}
         {isLoggedIn ? (
           <ProfileMenu name={name} points={points} />
         ) : (

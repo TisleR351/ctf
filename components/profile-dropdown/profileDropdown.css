@@ -9,11 +9,23 @@
     justify-content: center;
     display: inline-flex;
     white-space: nowrap;
+    transition: all 0.3s ease; /* Ajout de la transition pour les changements d'état */
+    border-radius: 5px; /* Arrondi des bords par défaut */
 }
 
+/* Style appliqué lors du survol classique du bouton */
 .profile-button:hover {
     color: var(--achromatic-0);
     background-color: var(--primary-8);
+}
+
+/* Style appliqué lorsque la dropdown est ouverte */
+.profile-button.hover-open {
+    background-color: var(--primary-7); /* Une couleur différente quand la dropdown est ouverte */
+    color: var(--achromatic-0);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Effet visuel supplémentaire pour signaler l'ouverture */
+    border-bottom-left-radius: 0; /* Supprime l'arrondi en bas à gauche */
+    border-bottom-right-radius: 0; /* Supprime l'arrondi en bas à droite */
 }
 
 .profile-button-container {
@@ -33,6 +45,8 @@
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    border-top-left-radius: 0; /* Supprime l'arrondi en haut à gauche */
+    border-top-right-radius: 0; /* Supprime l'arrondi en haut à droite */
 }
 
 .dropdown-option {
@@ -43,7 +57,9 @@
     cursor: pointer;
 }
 
+/* Style de survol pour les options du menu déroulant */
 .dropdown-option:hover {
-    background-color: var(--primary-8);
+    border-radius: 0;
+    background-color: var(--primary-7);
     color: var(--achromatic-0);
 }

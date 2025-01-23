@@ -2,6 +2,8 @@
 import "./profileDropdown.css";
 import { useRef } from "react";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
+import { faPeopleGroup, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ProfileDropdownProps extends Omit<HTMLMotionProps<"button">, "ref"> {
   name: string;
@@ -24,18 +26,11 @@ export default function ProfileDropdown({
 
   const dropdownOptions = [
     {
-      label: "Idk",
+      label: "My team ",
       onClick: () => {
         setIsOpenAction(false);
       },
-      icon: "fa-vials",
-    },
-    {
-      label: "CTF",
-      onClick: () => {
-        setIsOpenAction(false);
-      },
-      icon: "fa-vials",
+      icon: faPeopleGroup,
     },
     {
       label: "Sign out",
@@ -44,7 +39,7 @@ export default function ProfileDropdown({
         sessionStorage.removeItem("token");
         window.location.reload();
       },
-      icon: "fa-sign-out",
+      icon: faSignOut,
     },
   ];
 
@@ -53,7 +48,7 @@ export default function ProfileDropdown({
       <motion.button
         layout
         onClick={() => setIsOpenAction(!isOpen)}
-        className={`profile-button ${className || ""}`.trim()}
+        className={`profile-button ${isOpen ? "hover-open" : ""} ${className || ""}`.trim()}
         {...props}
       >
         <motion.div key={name} layout ref={textRef}>
@@ -94,6 +89,7 @@ export default function ProfileDropdown({
                 className="dropdown-option"
                 onClick={option.onClick}
               >
+                <FontAwesomeIcon icon={option.icon} />
                 {option.label}
               </motion.div>
             ))}
