@@ -41,9 +41,9 @@ export default function Countdown() {
 
   return (
     <div className="countdown">
-      ECTF25 starts in
+      ECTF25 starts in <br />
       <span id="countdown">
-        {`${timeLeft.days} D ${timeLeft.hours} H ${timeLeft.minutes} M ${timeLeft.seconds} S`}
+        {`${timeLeft.days} Days ${timeLeft.hours}:${timeLeft.minutes}:${timeLeft.seconds}`}
       </span>
     </div>
   );
