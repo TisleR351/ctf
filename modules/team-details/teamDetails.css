@@ -1,8 +1,8 @@
 .team-details-container {
     display: flex;
+    flex-direction: column;
     height: 85vh;
     justify-content: center;
-    flex-direction: column;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
@@ -21,6 +21,7 @@
 
 .team-details-token-display {
     width: 35%;
+    min-width: 550px;
 }
 
 .team-details-name-display {
@@ -37,6 +38,8 @@
 }
 
 .players-table {
+    border-radius: 15px;
+    overflow: hidden;
     width: 100%;
     border-collapse: collapse;
 }
@@ -74,31 +77,3 @@
     margin-right: 1vw;
 }
 
-/* Responsiveness */
-@media (max-width: 600px) {
-    .team-details-container {
-        padding: 15px;
-    }
-
-    .team-details-title-container {
-        font-size: 20px;
-    }
-
-    .team-details-token-container {
-        font-size: 14px;
-    }
-
-    .team-details-points-container {
-        font-size: 18px;
-    }
-
-    .team-details-captain-container {
-        font-size: 16px;
-    }
-
-    .players-table th,
-    .players-table td {
-        font-size: 14px;
-        padding: 8px;
-    }
-}

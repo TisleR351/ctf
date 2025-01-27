@@ -33,7 +33,7 @@ export default function Overlay() {
             teamPoints={user.team.points}
           />
         )}
-        {(isTeamsPage || isMyTeamPage) && !user?.team && (
+        {user && (isTeamsPage || isMyTeamPage) && !user.team && (
           <>
             <JoinTeamSection />
             <CreateTeamSection />

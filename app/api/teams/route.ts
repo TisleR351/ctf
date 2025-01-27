@@ -1,122 +1,313 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/utils/lib/mongodb";
 import crypto from "crypto";
-import { ObjectId } from "mongodb"; // Import de ObjectId
+import { Collection, Db, ObjectId } from "mongodb";
+import { TeamMongoDB } from "@/utils/types/team";
 
-export async function POST(request: Request) {
-  const { name, token, id_user } = await request.json();
+const jsonErrorResponse = (message: string, status: number) =>
+  NextResponse.json({ error: message }, { status });
 
-  if (!id_user) {
-    return NextResponse.json(
-      { error: "Field 'userId' is required." },
-      { status: 400 },
+const updateUserTeam = async (db: Db, userId: string, teamId: string) => {
+  const userUpdate = await db
+    .collection("user")
+    .updateOne({ _id: new ObjectId(userId) }, { $set: { team: teamId } });
+  return userUpdate.modifiedCount > 0;
+};
+
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const teamName = url.searchParams.get("teamName"); // Récupérer le paramètre query "teamName"
+
+  try {
+    const db = await getDb();
+
+    // Définir un filtre de base
+    let filter = {};
+    if (teamName) {
+      filter = { name: teamName }; // Filtrer par le nom de l'équipe
+    }
+
+    // Récupérer les équipes en fonction du filtre
+    const teams = await db
+      .collection("teams")
+      .find(filter, { projection: { token: 0, tried_challenges: 0 } })
+      .toArray();
+
+    // Obtenir les détails pour chaque équipe
+    const teamsWithDetails = await Promise.all(
+      teams.map(async (team) => {
+        const captain = await db
+          .collection("user")
+          .findOne(
+            { _id: new ObjectId(team.captain) },
+            { projection: { username: 1, points: 1 } },
+          );
+
+        const players = await db
+          .collection("user")
+          .find(
+            {
+              _id: { $in: team.players.map((id: string) => new ObjectId(id)) },
+            },
+            { projection: { username: 1, points: 1 } },
+          )
+          .toArray();
+
+        return {
+          ...team,
+          captain: captain || null,
+          players,
+        };
+      }),
     );
+
+    // Retourner les équipes avec leurs détails
+    return NextResponse.json({ teams: teamsWithDetails }, { status: 200 });
+  } catch (error) {
+    return jsonErrorResponse("Internal Server Error", 500);
+  }
+}
+
+export async function DELETE(request: Request) {
+  const authorizationHeader = request.headers.get("Authorization");
+
+  if (!authorizationHeader) {
+    return jsonErrorResponse("'Authorization' header is required.", 400);
+  }
+
+  const match = authorizationHeader.match(/^Bearer (.+)$/);
+  if (!match) {
+    return jsonErrorResponse("Invalid Authorization header format.", 400);
+  }
+
+  const token = match[1]; // Extraire le token
+
+  const { team_id } = await request.json();
+
+  if (!team_id) {
+    return jsonErrorResponse("'team_id' is required.", 400);
   }
 
   try {
     const db = await getDb();
 
-    const userId = new ObjectId(id_user);
-    const existingUser = await db.collection("user").findOne({ _id: userId });
-    if (existingUser?.team) {
-      return NextResponse.json(
-        { error: "User already belongs to a team." },
-        { status: 400 },
+    // Trouver l'utilisateur correspondant au token
+    const user = await db.collection("user").findOne({ token });
+    if (!user) {
+      return jsonErrorResponse("User not found or invalid token.", 404);
+    }
+
+    // Trouver l'équipe à partir de l'ID
+    const team = await db
+      .collection("teams")
+      .findOne({ _id: new ObjectId(team_id) });
+    if (!team) {
+      return jsonErrorResponse("Team not found.", 404);
+    }
+
+    // Vérifier si l'utilisateur est le capitaine
+    if (team.captain !== user._id.toString()) {
+      return jsonErrorResponse("Only the captain can delete the team.", 403);
+    }
+
+    // Suppression de l'équipe
+    const deleteResult = await db
+      .collection("teams")
+      .deleteOne({ _id: new ObjectId(team_id) });
+    if (deleteResult.deletedCount === 0) {
+      return jsonErrorResponse("Failed to delete team.", 500);
+    }
+
+    // Mise à jour des utilisateurs pour retirer l'attribut 'team'
+    const updateUsersResult = await db
+      .collection("user")
+      .updateMany({ team: team_id }, { $unset: { team: "" } });
+
+    if (updateUsersResult.modifiedCount === 0) {
+      return jsonErrorResponse(
+        "Failed to remove team association from users.",
+        500,
       );
     }
 
-    // Si 'name' est fourni, on crée une nouvelle équipe
+    return NextResponse.json(
+      { message: "Team deleted successfully." },
+      { status: 200 },
+    );
+  } catch (error) {
+    return jsonErrorResponse(
+      "An error occurred while processing the request.",
+      500,
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  const authorizationHeader = request.headers.get("Authorization");
+
+  if (!authorizationHeader) {
+    return jsonErrorResponse("'Authorization' header is required.", 400);
+  }
+
+  const match = authorizationHeader.match(/^Bearer (.+)$/);
+  if (!match) {
+    return jsonErrorResponse("Invalid Authorization header format.", 400);
+  }
+
+  const token = match[1]; // Extraire le token
+
+  const { team_id } = await request.json();
+
+  if (!team_id) {
+    return jsonErrorResponse("'team_id' is required.", 400);
+  }
+
+  try {
+    const db = await getDb();
+
+    // Trouver l'utilisateur correspondant au token
+    const user = await db.collection("user").findOne({ token });
+    if (!user) {
+      return jsonErrorResponse("User not found or invalid token.", 404);
+    }
+
+    const userId = `${user._id}`;
+
+    // Trouver l'équipe à partir de l'ID
+    const team = await db
+      .collection("teams")
+      .findOne({ _id: new ObjectId(team_id) });
+    if (!team) {
+      return jsonErrorResponse("Team not found.", 404);
+    }
+
+    // Vérifier si l'utilisateur est dans la liste des joueurs de l'équipe
+    if (!team.players.includes(userId)) {
+      return jsonErrorResponse("User is not part of this team.", 403);
+    }
+
+    const teamCollection: Collection<TeamMongoDB> = db.collection("teams");
+    const updateTeamResult = await teamCollection.updateOne(
+      { _id: new ObjectId(team_id) },
+      { $pull: { players: userId } },
+    );
+
+    if (updateTeamResult.modifiedCount === 0) {
+      return jsonErrorResponse("Failed to remove user from the team.", 500);
+    }
+
+    // Vider l'attribut 'team' de l'utilisateur
+    const updateUserResult = await db
+      .collection("user")
+      .updateOne({ _id: new ObjectId(userId) }, { $unset: { team: "" } });
+
+    if (updateUserResult.modifiedCount === 0) {
+      return jsonErrorResponse("Failed to update user's team attribute.", 500);
+    }
+
+    return NextResponse.json(
+      { message: "User removed from team successfully." },
+      { status: 200 },
+    );
+  } catch (error) {
+    return jsonErrorResponse(
+      "An error occurred while processing the request.",
+      500,
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  const authorizationHeader = request.headers.get("Authorization");
+
+  if (!authorizationHeader) {
+    return jsonErrorResponse("'Authorization' header is required.", 400);
+  }
+
+  const match = authorizationHeader.match(/^Bearer (.+)$/);
+  if (!match) {
+    return jsonErrorResponse("Invalid Authorization header format.", 400);
+  }
+
+  const token = match[1]; // Extraire le token
+
+  const { name, token: teamToken } = await request.json();
+
+  if (!name && !teamToken) {
+    return jsonErrorResponse("Either 'name' or 'token' must be provided.", 400);
+  }
+
+  try {
+    const db = await getDb();
+
+    // Trouver l'utilisateur correspondant au token
+    const user = await db.collection("user").findOne({ token });
+    if (!user) {
+      return jsonErrorResponse("User not found or invalid token.", 404);
+    }
+
+    const userId = `${user._id}`;
+
+    // Vérifier si l'utilisateur appartient déjà à une équipe
+    if (user.team) {
+      return jsonErrorResponse("User already belongs to a team.", 400);
+    }
+
     if (name) {
-      // Vérification si l'équipe existe déjà
       const existingTeam = await db.collection("teams").findOne({ name });
       if (existingTeam) {
-        return NextResponse.json(
-          { error: "A team with this name already exists." },
-          { status: 400 },
-        );
+        return jsonErrorResponse("A team with this name already exists.", 400);
       }
 
-      // Génération d'un token unique pour l'équipe
       const generatedToken = crypto.randomBytes(16).toString("hex");
 
       const newTeam = {
         name,
         token: generatedToken,
-        captain: id_user,
-        players: [id_user],
+        captain: userId,
+        players: [userId],
         points: 0,
         tried_challenges: [],
       };
 
-      // Insertion de la nouvelle équipe dans la collection
       const result = await db.collection("teams").insertOne(newTeam);
-
-      // Récupération de l'ID de l'équipe nouvellement créée
       const teamId = `${result.insertedId}`;
 
-      // Vérification si l'utilisateur existe
-      const user = await db.collection("user").findOne({ _id: userId });
-      if (!user) {
-        return NextResponse.json({ error: "User not found." }, { status: 404 });
-      }
-
-      // Mise à jour de l'utilisateur pour ajouter l'équipe
-      const updateResult = await db
-        .collection("user")
-        .updateOne({ _id: userId }, { $set: { team: teamId } });
-
-      if (updateResult.modifiedCount === 0) {
-        return NextResponse.json(
-          { error: "Failed to update user with team." },
-          { status: 500 },
-        );
+      const userUpdated = await updateUserTeam(db, userId, teamId);
+      if (!userUpdated) {
+        return jsonErrorResponse("Failed to update user with team.", 500);
       }
 
       return NextResponse.json(
-        {
-          message: "Team created successfully.",
-          token: generatedToken,
-        },
+        { message: "Team created successfully.", token: generatedToken },
         { status: 201 },
       );
     }
 
-    if (token) {
-      const team = await db.collection("teams").findOne({ token: token });
+    if (teamToken) {
+      const team = await db.collection("teams").findOne({ token: teamToken });
       if (!team) {
-        return NextResponse.json(
-          { error: "Team with this token does not exist." },
-          { status: 400 },
-        );
+        return jsonErrorResponse("Team with this token does not exist.", 400);
       }
 
       if (team.players.length >= 5) {
-        return NextResponse.json(
-          { error: "This team already has 5 players." },
-          { status: 400 },
-        );
+        return jsonErrorResponse("This team already has 5 players.", 400);
       }
 
-      const updateTeamResult = await db
-        .collection("teams")
-        .updateOne({ _id: team._id }, { $push: { players: id_user } });
+      const teamsCollection: Collection<TeamMongoDB> = db.collection("teams");
+
+      const updateTeamResult = await teamsCollection.updateOne(
+        { _id: team._id },
+        { $push: { players: userId } },
+      );
 
       if (updateTeamResult.modifiedCount === 0) {
-        return NextResponse.json(
-          { error: "Failed to add user to the team." },
-          { status: 500 },
-        );
+        return jsonErrorResponse("Failed to add user to the team.", 500);
       }
 
-      const updateUserResult = await db
-        .collection("user")
-        .updateOne({ _id: userId }, { $set: { team: `${team._id}` } });
-
-      if (updateUserResult.modifiedCount === 0) {
-        return NextResponse.json(
-          { error: "Failed to update user with team." },
-          { status: 500 },
-        );
+      const userUpdated = await updateUserTeam(db, userId, `${team._id}`);
+      if (!userUpdated) {
+        return jsonErrorResponse("Failed to update user with team.", 500);
       }
 
       return NextResponse.json(
@@ -125,15 +316,11 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json(
-      { error: "Either 'name' or 'token' must be provided." },
-      { status: 400 },
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return jsonErrorResponse("Either 'name' or 'token' must be provided.", 400);
   } catch (error) {
-    return NextResponse.json(
-      { error: "An error occurred while processing the request." },
-      { status: 500 },
+    return jsonErrorResponse(
+      "An error occurred while processing the request.",
+      500,
     );
   }
 }

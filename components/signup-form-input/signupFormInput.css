@@ -20,6 +20,10 @@
     border: solid 1px var(--primary-9);
 }
 
+.signup-form-input.error:focus {
+    outline: none;
+}
+
 .signup-form-input.error {
     border: 1px solid var(--tertiary-5);
     background-color: var(--tertiary-0);

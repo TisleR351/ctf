@@ -1,42 +1,38 @@
-.about-us-container {
+.teams-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    font-size: var(--font-size-large);
-    width: 100%;
-    max-width: 600px;
-    padding: 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
+    align-items: center;
+    background-color: var(--achromatic-0);
 }
 
-.about-us-logo {
-    margin: 0 auto;
-    width: 250px;
-    height: auto;
-    display: block;
+.teams-table {
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 2%;
+    width: 80%;
+    border-collapse: collapse;
 }
 
-.about-us-title {
-    font-size: 28px;
+.teams-table thead {
+    background-color: var(--primary-8);
+    color: var(--achromatic-0);
+}
+
+.teams-table th,
+.teams-table td {
     text-align: center;
-    margin-bottom: 20px;
+    border-radius: 0;
+    padding: 2% 0;
+    border: 1px solid var(--achromatic-0);
+}
+
+.teams-table td {
+    cursor: pointer;
     font-weight: bold;
+    color: var(--primary-8);
 }
 
-.about-us-info {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: var(--font-size-small);
-    text-align: center;
-}
-
-.about-us-discord-button {
-    display: block;
-}
-
-.discord-link {
-    margin: 0 auto;
-    width: 250px;
+.teams-table tbody tr:hover {
+    background-color: var(--achromatic-1);
 }

@@ -38,7 +38,6 @@ export default function SigninForm() {
         setMessage("Sign in successful!");
         setError("");
         sessionStorage.setItem("token", data.token);
-
         Cookies.set("token", data.token, {
           expires: 7,
           domain: ".ectf.fr",

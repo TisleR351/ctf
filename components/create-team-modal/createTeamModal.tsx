@@ -35,28 +35,12 @@ export default function CreateTeamModal({
     }
 
     try {
-      const userResponse = await fetch("/api/me", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!userResponse.ok) {
-        const userError = await userResponse.json();
-        setError(userError.error || "Failed to fetch user information.");
+      if (!teamName) {
+        setError("Team name is required.");
         return;
       }
 
-      const userData = await userResponse.json();
-      const userId = userData?.user?._id;
-
-      if (!teamName || !userId) {
-        setError("All fields are required.");
-        return;
-      }
-
-      // Save team
+      // Création d'une équipe avec le nom fourni
       const teamResponse = await fetch("/api/teams", {
         method: "POST",
         headers: {
@@ -65,7 +49,6 @@ export default function CreateTeamModal({
         },
         body: JSON.stringify({
           name: teamName,
-          id_user: userId,
         }),
       });
 

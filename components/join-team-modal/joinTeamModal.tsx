@@ -33,24 +33,8 @@ export default function JoinTeamModal({
     }
 
     try {
-      const userResponse = await fetch("/api/me", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!userResponse.ok) {
-        const userError = await userResponse.json();
-        setError(userError.error || "Failed to fetch user information.");
-        return;
-      }
-
-      const userData = await userResponse.json();
-      const userId = userData?.user?._id;
-
-      if (!teamToken || !userId) {
-        setError("All fields are required.");
+      if (!teamToken) {
+        setError("Team token or name is required.");
         return;
       }
 
@@ -62,7 +46,6 @@ export default function JoinTeamModal({
         },
         body: JSON.stringify({
           token: teamToken,
-          id_user: userId,
         }),
       });
 
@@ -72,7 +55,7 @@ export default function JoinTeamModal({
         return;
       }
 
-      setSuccess(true);
+      window.location.reload();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setError("An unexpected error occurred. Please try again.");
