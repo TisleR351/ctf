@@ -2,47 +2,23 @@
 
 import "./overlay.css";
 import MainMenu from "@/modules/main-menu/mainMenu";
-import { useState, useEffect } from "react";
 import ProfileMenu from "@/modules/profile-menu/profileMenu";
 import LoginMenu from "@/components/login-menu/loginMenu";
 import { CreateChallengeSection } from "@/modules/create-challenge-section/createChallengeSection";
 import { usePathname } from "next/navigation";
+import { CreateTeamSection } from "@/modules/create-team-section/createTeamSection";
+import { JoinTeamSection } from "@/modules/join-team-section/joinTeamSection";
+import { useUser } from "@/utils/contexts/userContext";
+import TeamInfoSection from "@/modules/team-info-section/teamInfoSection";
 
 export default function Overlay() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [name, setName] = useState<string>("Me");
-  const [points, setPoints] = useState<number>(0);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { user } = useUser();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const isConnected = !!token;
-    setIsLoggedIn(isConnected);
-
-    if (isConnected) {
-      fetch("/api/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch user info.");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setIsAdmin(data.user?.role === 10000);
-          setName(data.user?.username);
-          setPoints(data.user?.points);
-        });
-    } else {
-      setIsAdmin(false);
-    }
-  }, []);
+  const isAdmin = user?.role === 10000;
+  const isChallengesPage = pathname === "/challenges";
+  const isTeamsPage = pathname === "/teams";
+  const isMyTeamPage = pathname === "/my-team";
 
   return (
     <div className="overlay">
@@ -50,9 +26,21 @@ export default function Overlay() {
         <MainMenu />
       </div>
       <div className="sub-menu-container">
-        {isAdmin && pathname === "/challenge" && <CreateChallengeSection />}
-        {isLoggedIn ? (
-          <ProfileMenu name={name} points={points} />
+        {isAdmin && isChallengesPage && <CreateChallengeSection />}
+        {isTeamsPage && user?.team && (
+          <TeamInfoSection
+            teamName={user.team.name}
+            teamPoints={user.team.points}
+          />
+        )}
+        {user && (isTeamsPage || isMyTeamPage) && !user.team && (
+          <>
+            <JoinTeamSection />
+            <CreateTeamSection />
+          </>
+        )}
+        {user ? (
+          <ProfileMenu name={user.username} points={user.points} />
         ) : (
           <LoginMenu />
         )}

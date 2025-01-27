@@ -19,7 +19,18 @@ export function Message({
       className={`message-container bg-${type} ${className || ""}`.trim()}
       {...props}
     >
-      {!!message && message}
+      {!!message &&
+        message.split("\n").map((line, index) => (
+          <span key={index}>
+            {line.split(/(\{.*?\})/g).map((segment, idx) => {
+              if (segment.startsWith("{") && segment.endsWith("}")) {
+                return <strong key={idx}>{segment.slice(1, -1)}</strong>;
+              }
+              return segment;
+            })}
+            <br />
+          </span>
+        ))}
     </div>
   );
 }

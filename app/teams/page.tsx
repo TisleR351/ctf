@@ -1,40 +1,75 @@
 "use client";
 
 import "./page.css";
-import React from "react";
-import Countdown from "@/components/countdown/countdown";
-import Image from "next/image";
-import discord from "@/public/discord.png";
-import ectf_logo from "@/public/ectf_logo.png";
+import React, { useEffect, useState } from "react";
 import BaseLayout from "@/modules/layout/layout";
-import Link from "next/link";
+import { Team } from "@/utils/types/team";
 
 export default function AboutUsPage() {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch("/api/teams");
+        if (!response.ok) {
+          throw new Error("Failed to fetch teams");
+        }
+
+        const data: { teams: Team[] } = await response.json();
+        setTeams(data.teams);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeams();
+  }, []);
+
+  if (loading) {
+    return (
+      <BaseLayout>
+        <div className="loading">Loading teams...</div>
+      </BaseLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <BaseLayout>
+        <div className="error">{error}</div>
+      </BaseLayout>
+    );
+  }
+
   return (
     <BaseLayout>
-      <Image
-        src={ectf_logo}
-        alt="ECTF Logo"
-        width={250}
-        height={100}
-        className="about-us-logo"
-      />
-      <div className="about-us-title">Welcome to ECTF25</div>
-      <Countdown />
-      <div className="about-us-info">
-        The website is not available to the public yet, join our Discord to get
-        notified when registrations are available.
-      </div>
-      <div className={"discord-link"}>
-        <Link href="https://discord.gg/3kH63ckmeb" target="_blank">
-          <Image
-            src={discord}
-            alt="Join Discord"
-            width={250}
-            height={40}
-            className="about-us-discord-button"
-          />
-        </Link>
+      <div className="teams-container">
+        <table className="teams-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Captain</th>
+              <th className="teams-points">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teams.map((team) => (
+              <tr
+                key={team._id}
+                onClick={() => (window.location.href = "/teams/" + team.name)}
+              >
+                <td>{team.name}</td>
+                <td>{team.captain.username}</td>
+                <td>{team.points}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </BaseLayout>
   );
