@@ -36,12 +36,12 @@ export async function POST(request: Request) {
         );
       }
 
-      // Génération d'un code unique pour l'équipe
+      // Génération d'un token unique pour l'équipe
       const generatedToken = crypto.randomBytes(16).toString("hex");
 
       const newTeam = {
         name,
-        code: generatedToken,
+        token: generatedToken,
         captain: id_user,
         players: [id_user],
         points: 0,
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
     }
 
     if (token) {
-      const team = await db.collection("teams").findOne({ code: token });
+      const team = await db.collection("teams").findOne({ token: token });
       if (!team) {
         return NextResponse.json(
           { error: "Team with this token does not exist." },

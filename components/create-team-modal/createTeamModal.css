@@ -15,8 +15,8 @@
 }
 
 .create-team-success-message {
+    height: fit-content;
     font-weight: initial;
-    padding: 10%;
 }
 
 .create-team-error-message {

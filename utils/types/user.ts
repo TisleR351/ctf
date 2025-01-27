@@ -1,10 +1,16 @@
-export interface User {
-  email: string;
-  username: string;
+import { Team } from "@/utils/types/team";
+
+export interface User extends UserMinified {
   password: string;
   role: number;
-  team: string;
-  points: number;
+  team: Team;
   token: string;
   createdAt: Date;
+}
+
+export interface UserMinified {
+  email: string;
+  points: number;
+  username: string;
+  _id: string;
 }

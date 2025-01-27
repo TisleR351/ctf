@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
 import { faPeopleGroup, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 interface ProfileDropdownProps extends Omit<HTMLMotionProps<"button">, "ref"> {
   name: string;
@@ -30,6 +31,7 @@ export default function ProfileDropdown({
       onClick: () => {
         setIsOpenAction(false);
       },
+      href: "/my-team",
       icon: faPeopleGroup,
     },
     {
@@ -39,6 +41,7 @@ export default function ProfileDropdown({
         sessionStorage.removeItem("token");
         window.location.reload();
       },
+      href: "/my-team",
       icon: faSignOut,
     },
   ];
@@ -89,8 +92,13 @@ export default function ProfileDropdown({
                 className="dropdown-option"
                 onClick={option.onClick}
               >
-                <FontAwesomeIcon icon={option.icon} />
-                {option.label}
+                <Link href={option.href} className={"dropdown-link"}>
+                  <FontAwesomeIcon
+                    icon={option.icon}
+                    className={"dropdown-icon"}
+                  />
+                  <div className={"dropdown-label"}>{option.label}</div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>

@@ -1,12 +1,12 @@
 "use client";
 
 import "./signinForm.css";
-
 import SignupFormInput from "@/components/signup-form-input/signupFormInput";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Message } from "@/components/message/message";
 import { MessageEnums } from "@/utils/enums/MessageEnums";
+import Cookies from "js-cookie";
 
 export default function SigninForm() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -38,6 +38,14 @@ export default function SigninForm() {
         setMessage("Sign in successful!");
         setError("");
         sessionStorage.setItem("token", data.token);
+
+        Cookies.set("token", data.token, {
+          expires: 7,
+          domain: ".ectf.fr",
+          secure: true,
+          path: "/",
+        });
+
         setTimeout(() => {
           window.location.href = "/challenge";
         }, 1000);

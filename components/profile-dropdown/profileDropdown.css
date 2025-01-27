@@ -63,3 +63,17 @@
     background-color: var(--primary-7);
     color: var(--achromatic-0);
 }
+
+.dropdown-link {
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-icon {
+    margin-right: 1vh;
+    width: 20%;
+}
+
+.dropdown-label {
+    width: 80%;
+}

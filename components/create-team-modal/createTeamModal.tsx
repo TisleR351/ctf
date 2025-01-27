@@ -1,6 +1,7 @@
 "use client";
 
 import "./createTeamModal.css";
+
 import React, { useState } from "react";
 import MainInput from "@/components/main-input/mainInput";
 import MainButton from "@/components/main-button/mainButton";

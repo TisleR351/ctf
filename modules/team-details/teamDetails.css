@@ -1,0 +1,104 @@
+.team-details-container {
+    display: flex;
+    height: 85vh;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    gap: 5vh;
+}
+
+.team-details-name-points-container {
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+}
+
+.team-details-points-display {
+    width: 10%;
+}
+
+.team-details-token-display {
+    width: 35%;
+}
+
+.team-details-name-display {
+    width: 100%;
+}
+
+.team-details-players-container {
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--achromatic-0);
+}
+
+.players-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.players-table thead {
+    background-color: var(--primary-8);
+    color: var(--achromatic-0);
+}
+
+.players-table th,
+.players-table td {
+    text-align: center;
+    border-radius: 0;
+    padding: 2% 0;
+    border: 1px solid var(--achromatic-0);
+}
+
+.players-table tbody tr:hover {
+    background-color: var(--achromatic-1);
+}
+
+.table-points {
+    width: 30%;
+}
+
+.players-table th {
+    font-weight: bold;
+}
+
+.players-table td {
+    color: var(--achromatic-7);
+}
+
+.crown-icon {
+    margin-right: 1vw;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .team-details-container {
+        padding: 15px;
+    }
+
+    .team-details-title-container {
+        font-size: 20px;
+    }
+
+    .team-details-token-container {
+        font-size: 14px;
+    }
+
+    .team-details-points-container {
+        font-size: 18px;
+    }
+
+    .team-details-captain-container {
+        font-size: 16px;
+    }
+
+    .players-table th,
+    .players-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
