@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/utils/lib/mongodb";
 import crypto from "crypto";
 import { Collection, Db, ObjectId } from "mongodb";
-import { TeamMongoDB } from "@/utils/types/team";
+import { TeamMongoDB, TeamMongoDBWithRanking } from "@/utils/types/team";
 
 const jsonErrorResponse = (message: string, status: number) =>
   NextResponse.json({ error: message }, { status });
@@ -17,6 +17,7 @@ const updateUserTeam = async (db: Db, userId: string, teamId: string) => {
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const teamName = url.searchParams.get("teamName"); // Récupérer le paramètre query "teamName"
+  const sortOrder = url.searchParams.get("sortOrder") || "desc"; // Récupérer l'ordre de tri (par défaut 'desc')
 
   try {
     const db = await getDb();
@@ -27,15 +28,23 @@ export async function GET(request: Request) {
       filter = { name: teamName }; // Filtrer par le nom de l'équipe
     }
 
-    // Récupérer les équipes en fonction du filtre
+    // Définir l'ordre de tri par points
+    const sortByPoints = sortOrder === "asc" ? 1 : -1;
+
+    // Récupérer les équipes en fonction du filtre et trier par points
     const teams = await db
       .collection("teams")
       .find(filter, { projection: { token: 0, tried_challenges: 0 } })
+      .sort({ points: sortByPoints })
       .toArray();
 
-    // Obtenir les détails pour chaque équipe
+    const teamsWithRanking = teams.map((team, index: number) => ({
+      ...team,
+      ranking: index + 1,
+    })) as unknown as TeamMongoDBWithRanking[];
+
     const teamsWithDetails = await Promise.all(
-      teams.map(async (team) => {
+      teamsWithRanking.map(async (team) => {
         const captain = await db
           .collection("user")
           .findOne(
@@ -61,10 +70,10 @@ export async function GET(request: Request) {
       }),
     );
 
-    // Retourner les équipes avec leurs détails
+    // Retourner les équipes avec leurs détails et leur classement
     return NextResponse.json({ teams: teamsWithDetails }, { status: 200 });
   } catch (error) {
-    return jsonErrorResponse("Internal Server Error", 500);
+    return jsonErrorResponse(`${error}`, 500);
   }
 }
 
@@ -135,10 +144,7 @@ export async function DELETE(request: Request) {
       { status: 200 },
     );
   } catch (error) {
-    return jsonErrorResponse(
-      "An error occurred while processing the request.",
-      500,
-    );
+    return jsonErrorResponse(`${error}`, 500);
   }
 }
 
@@ -181,7 +187,6 @@ export async function PUT(request: Request) {
       return jsonErrorResponse("Team not found.", 404);
     }
 
-    // Vérifier si l'utilisateur est dans la liste des joueurs de l'équipe
     if (!team.players.includes(userId)) {
       return jsonErrorResponse("User is not part of this team.", 403);
     }
@@ -210,10 +215,7 @@ export async function PUT(request: Request) {
       { status: 200 },
     );
   } catch (error) {
-    return jsonErrorResponse(
-      "An error occurred while processing the request.",
-      500,
-    );
+    return jsonErrorResponse(`${error}`, 500);
   }
 }
 
@@ -318,9 +320,6 @@ export async function POST(request: Request) {
 
     return jsonErrorResponse("Either 'name' or 'token' must be provided.", 400);
   } catch (error) {
-    return jsonErrorResponse(
-      "An error occurred while processing the request.",
-      500,
-    );
+    return jsonErrorResponse(`${error}`, 500);
   }
 }

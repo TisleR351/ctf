@@ -12,16 +12,16 @@
 .team-details-name-points-container {
     display: flex;
     flex-direction: row;
-    gap: 3%;
+    gap: 2vw;
 }
 
 .team-details-points-display {
-    width: 10%;
+    width: 30%;
 }
 
 .team-details-token-display {
-    width: 35%;
-    min-width: 550px;
+    height: 100%;
+    width: 10%;
 }
 
 .team-details-name-display {

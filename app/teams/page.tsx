@@ -52,9 +52,10 @@ export default function AboutUsPage() {
         <table className="teams-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Captain</th>
-              <th className="teams-points">Points</th>
+              <th>name</th>
+              <th>captain</th>
+              <th>rank</th>
+              <th className="teams-points">points</th>
             </tr>
           </thead>
           <tbody>
@@ -63,6 +64,7 @@ export default function AboutUsPage() {
                 key={team._id}
                 onClick={() => (window.location.href = "/teams/" + team.name)}
               >
+                <td>{team.ranking}</td>
                 <td>{team.name}</td>
                 <td>{team.captain.username}</td>
                 <td>{team.points}</td>

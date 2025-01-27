@@ -1,6 +1,5 @@
 import { UserMinified } from "@/utils/types/user";
 import { Challenge } from "@/utils/types/challenge";
-import { ObjectId } from "mongodb";
 
 export interface Team {
   captain: UserMinified;
@@ -8,16 +7,20 @@ export interface Team {
   players: UserMinified[];
   points: number;
   token: string;
+  ranking: string;
   tried_challenges: Challenge[];
   _id: string;
 }
 
 export interface TeamMongoDB {
-  captain: string;
   name: string;
+  captain: string;
   players: string[];
   points: number;
-  token: string;
-  tried_challenges: string[];
-  _id: ObjectId;
+  tried_challenges?: string[];
+  token?: string;
+}
+
+export interface TeamMongoDBWithRanking extends TeamMongoDB {
+  ranking: number;
 }

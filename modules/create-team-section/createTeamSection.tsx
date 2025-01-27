@@ -8,6 +8,7 @@ export function CreateTeamSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const closeModal = () => {
+    window.location.reload();
     setIsModalOpen(false);
   };
   return (

@@ -9,9 +9,11 @@ interface DisplayProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function Display({ label, value, className }: DisplayProps) {
   return (
-    <div className={`display-container ${className}`.trim()}>
+    <div className={`display-container ${className}`}>
       {label && <div className="display-label">{label}</div>}
-      <div className="display-value">{value}</div>
+      <div className={`display-content ${className}`.trim()}>
+        <div className="display-value">{value}</div>
+      </div>
     </div>
   );
 }

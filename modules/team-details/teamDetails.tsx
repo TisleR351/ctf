@@ -6,6 +6,7 @@ import React, { HTMLAttributes, useState } from "react";
 import Display from "@/components/display/display";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCopy,
   faCrown,
   faPersonWalkingArrowRight,
   faTrash,
@@ -34,6 +35,23 @@ export default function TeamDetails({
   teamPlayers,
 }: TeamDetailsProps) {
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  function handleCopy() {
+    if (teamToken !== undefined) {
+      navigator.clipboard
+        .writeText(teamToken)
+        .then(() => setSuccess("Token successfully copied to clipboard"))
+        .catch((error) => {
+          setError("Erreur lors de la copie du token :" + `${error}`);
+        });
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
+    }
+  }
+
   async function handleDelete() {
     const token =
       !!sessionStorage.getItem("token") && sessionStorage.getItem("token");
@@ -91,13 +109,8 @@ export default function TeamDetails({
   const pathname = usePathname();
   return (
     <div className={"team-details-container"}>
-      {error && (
-        <Message
-          type={MessageEnums.ERROR}
-          message={error}
-          className={"create-team-error-message"}
-        />
-      )}
+      {error && <Message type={MessageEnums.ERROR} message={error} />}
+      {success && <Message type={MessageEnums.SUCCESS} message={success} />}
       <div className={"team-details-name-points-container"}>
         {pathname !== "/my-team" ? (
           <Display
@@ -107,26 +120,23 @@ export default function TeamDetails({
           />
         ) : user?._id === teamCaptain._id ? (
           <DisplayInteractive
+            type={MessageEnums.ERROR}
             value={teamName}
             label={"team name"}
             teamId={teamId}
             icon={faTrash}
             onClick={handleDelete}
+            className={"team-details-name-display"}
           />
         ) : (
           <DisplayInteractive
+            type={MessageEnums.ERROR}
             value={teamName}
             label={"team name"}
             teamId={teamId}
             icon={faPersonWalkingArrowRight}
             onClick={handleLeave}
-          />
-        )}
-        {teamToken && (
-          <Display
-            label={"token"}
-            value={teamToken}
-            className={"team-details-token-display"}
+            className={"team-details-name-display"}
           />
         )}
         <Display
@@ -134,6 +144,16 @@ export default function TeamDetails({
           value={teamPoints}
           className={"team-details-points-display"}
         />
+        {teamToken && (
+          <DisplayInteractive
+            type={MessageEnums.AVAILABLE}
+            label={"token"}
+            teamId={teamId}
+            icon={faCopy}
+            onClick={handleCopy}
+            className={"team-details-token-display"}
+          />
+        )}
       </div>
       <div className="team-details-players-container">
         <table className="players-table">

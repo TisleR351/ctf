@@ -1,5 +1,5 @@
 import "./message.css";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { MessageEnums } from "@/utils/enums/MessageEnums";
 
 interface ChallengeModalMessageProps extends HTMLAttributes<HTMLDivElement> {
@@ -14,9 +14,26 @@ export function Message({
   type = MessageEnums.AVAILABLE,
   ...props
 }: ChallengeModalMessageProps) {
+  const [visible, setVisible] = useState(false);
+
+  // Lorsque le message change, on le rend visible
+  useEffect(() => {
+    if (message) {
+      setVisible(true);
+
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
     <div
-      className={`message-container bg-${type} ${className || ""}`.trim()}
+      className={`message-container bg-${type} ${className || ""} ${
+        visible ? "visible" : "hidden"
+      }`.trim()}
       {...props}
     >
       {!!message &&

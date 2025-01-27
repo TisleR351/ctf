@@ -5,20 +5,65 @@
     flex-direction: column;
     align-items: start;
     padding: 2%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-container.visible {
+    opacity: 1;
+    transform: translateY(0); /* Animation de la position de l'élément */
+}
+
+.message-container.hidden {
+    opacity: 0;
+    transform: translateY(20px); /* La position est déplacée à nouveau pendant la disparition */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.message-container.hidden {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }
 
 .message-container.bg-primary {
+    color: var(--primary-8);
     background-color: var(--primary-1);
 }
 
 .message-container.bg-neutral {
+    color: var(--achromatic-6);
     background-color: var(--achromatic-2);
 }
 
 .message-container.bg-success {
+    color: var(--font-success);
     background-color: var(--success);
 }
 
 .message-container.bg-error {
+    color: var(--font-error);
     background-color: var(--error);
 }
