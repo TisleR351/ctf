@@ -52,10 +52,10 @@ export default function AboutUsPage() {
         <table className="teams-table">
           <thead>
             <tr>
-              <th>name</th>
-              <th>captain</th>
-              <th>rank</th>
-              <th className="teams-points">points</th>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>Captain</th>
+              <th className="teams-points">Points</th>
             </tr>
           </thead>
           <tbody>

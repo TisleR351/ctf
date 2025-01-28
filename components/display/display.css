@@ -21,9 +21,10 @@
 }
 
 .display-label {
+    font-weight: bold;
+    text-decoration: underline;
     font-size: var(--font-size-small);
     margin-bottom: 1vh;
-    font-weight: normal;
     color: var(--achromatic-0);
 }
 

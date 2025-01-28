@@ -115,14 +115,14 @@ export default function TeamDetails({
         {pathname !== "/my-team" ? (
           <Display
             value={teamName}
-            label={"team name"}
+            label={"Team name"}
             className={"team-details-name-display"}
           />
         ) : user?._id === teamCaptain._id ? (
           <DisplayInteractive
             type={MessageEnums.ERROR}
             value={teamName}
-            label={"team name"}
+            label={"Team name"}
             teamId={teamId}
             icon={faTrash}
             onClick={handleDelete}
@@ -132,7 +132,7 @@ export default function TeamDetails({
           <DisplayInteractive
             type={MessageEnums.ERROR}
             value={teamName}
-            label={"team name"}
+            label={"Team name"}
             teamId={teamId}
             icon={faPersonWalkingArrowRight}
             onClick={handleLeave}
@@ -140,14 +140,14 @@ export default function TeamDetails({
           />
         )}
         <Display
-          label={"points"}
+          label={"Points"}
           value={teamPoints}
           className={"team-details-points-display"}
         />
         {teamToken && (
           <DisplayInteractive
             type={MessageEnums.AVAILABLE}
-            label={"token"}
+            label={"Token"}
             teamId={teamId}
             icon={faCopy}
             onClick={handleCopy}
