@@ -23,6 +23,9 @@
 }
 
 .challenge-modal-content-author {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding-top: 1vh;
     padding-bottom: 1vh;
 }

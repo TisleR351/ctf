@@ -5,25 +5,25 @@ import { MessageEnums } from "@/utils/enums/MessageEnums";
 interface ChallengeModalMessageProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   message?: string;
+  time?: number;
   type?: MessageEnums;
 }
 
 export function Message({
   className,
   message,
+  time = 2500,
   type = MessageEnums.AVAILABLE,
   ...props
 }: ChallengeModalMessageProps) {
   const [visible, setVisible] = useState(false);
-
-  // Lorsque le message change, on le rend visible
   useEffect(() => {
     if (message) {
       setVisible(true);
 
       const timer = setTimeout(() => {
         setVisible(false);
-      }, 2500);
+      }, time);
 
       return () => clearTimeout(timer);
     }
