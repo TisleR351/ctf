@@ -11,9 +11,15 @@
     color: var(--tertiary-5)
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .signup-form-input {
     padding-left: 2%;
-    padding-right: 2%;
+    padding-right: 50px; /* Avoid overlap with the button */
     font-size: var(--font-size-small);
     height: 100%;
     width: 100%;
@@ -27,4 +33,17 @@
 .signup-form-input.error {
     border: 1px solid var(--tertiary-5);
     background-color: var(--tertiary-0);
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-9);
+    font-size: var(--font-size-small);
+    padding: 0;
 }

@@ -1,13 +1,14 @@
-import { Suspense } from "react";
-import PasswordForgottenForm from "@/components/password-forgotten-form/passwordForgottenForm";
-import BaseLayout from "@/modules/layout/layout";
+"use client";
 
-export default function ResetPasswordPage() {
+import React from "react";
+import Background from "@/components/background/background";
+import PasswordForgottenForm from "@/modules/password-forgotten-form/passwordForgottenForm";
+
+export default function PasswordRecoveryPage() {
   return (
-    <BaseLayout>
-      <Suspense fallback={<div>Loading...</div>}>
-        <PasswordForgottenForm />
-      </Suspense>
-    </BaseLayout>
+    <>
+      <Background />
+      <PasswordForgottenForm />
+    </>
   );
 }

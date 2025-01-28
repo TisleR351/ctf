@@ -15,6 +15,8 @@ export default function SigninForm() {
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setError("");
+    setMessage("");
     e.preventDefault();
 
     if (!emailOrUsername || !password) {
@@ -76,13 +78,14 @@ export default function SigninForm() {
           required={true}
         />
         <Link
-          href={"/forgotten-password"}
+          href={"/password-forgotten"}
           className={"signin-form-forgotten-password"}
         >
           password forgotten?
         </Link>
         {error && (
           <Message
+            key={error}
             type={MessageEnums.ERROR}
             message={error}
             className={"signin-message"}
@@ -90,6 +93,7 @@ export default function SigninForm() {
         )}
         {message && (
           <Message
+            key={message}
             type={MessageEnums.SUCCESS}
             message={message}
             className={"signin-message"}

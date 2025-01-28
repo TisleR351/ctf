@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
+import { hashPassword, updateUser } from "@/utils/services/apiServices";
 import { getDb } from "@/utils/lib/mongodb";
-import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
   try {
-    // Récupérer les données envoyées par le client
-    const body = await request.json();
-    const { token, password } = body;
+    const { token, password } = await request.json();
 
-    // Vérification de la présence des champs nécessaires
     if (!token || !password) {
       return NextResponse.json(
         { error: "Token and new password are required." },
@@ -16,13 +13,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Connexion à la base de données
     const db = await getDb();
-
-    // Rechercher l'utilisateur par le token et vérifier son expiration
     const user = await db.collection("user").findOne({
-      passwordResetToken: token,
-      passwordResetExpires: { $gt: new Date() }, // Vérifier si le token est toujours valide
+      "resetPassword.token": token,
+      "resetPassword.expiresAt": { $gt: new Date() },
     });
 
     if (!user) {
@@ -32,16 +26,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Hashage du nouveau mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Mise à jour du mot de passe de l'utilisateur et suppression du token
-    await db.collection("user").updateOne(
+    const hashedPassword = await hashPassword(password);
+    await updateUser(
       { _id: user._id },
-      {
-        $set: { password: hashedPassword },
-        $unset: { passwordResetToken: "", passwordResetExpires: "" },
-      },
+      { $set: { password: hashedPassword }, $unset: { resetPassword: "" } },
     );
 
     return NextResponse.json(
@@ -49,6 +37,9 @@ export async function POST(request: Request) {
       { status: 200 },
     );
   } catch (error) {
-    return NextResponse.json({ error: `${error}` }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error", details: error },
+      { status: 500 },
+    );
   }
 }
