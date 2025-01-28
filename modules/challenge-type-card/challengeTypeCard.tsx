@@ -4,18 +4,15 @@ import "./challengeTypeCard.css";
 import ChallengeCard from "@/components/challenge-card/challengeCard";
 import { HTMLAttributes } from "react";
 import { Challenge } from "@/utils/types/challenge";
-import { ChallengeCardTypeEnums } from "@/utils/enums/ChallengeCardEnums";
 
 interface ChallengeTypeCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
-  isLoggedIn: boolean;
   className?: string;
   challenges: Challenge[];
 }
 
 export default function ChallengeTypeCard({
   title,
-  isLoggedIn,
   challenges,
   ...props
 }: ChallengeTypeCardProps) {
@@ -24,15 +21,7 @@ export default function ChallengeTypeCard({
       <p className={"challenge-type-card-title"}>{title}</p>
       <div className={"challenge-card-container"}>
         {challenges.map((challenge) => (
-          <ChallengeCard
-            key={challenge._id}
-            type={
-              isLoggedIn
-                ? ChallengeCardTypeEnums.PRIMARY
-                : ChallengeCardTypeEnums.NEUTRAL
-            }
-            challenge={challenge}
-          />
+          <ChallengeCard key={`${challenge._id}`} challenge={challenge} />
         ))}
       </div>
     </div>
