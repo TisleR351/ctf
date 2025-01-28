@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     if (!token || !password) {
       return NextResponse.json(
         { error: "Token and new password are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json(
         { error: "Invalid or expired token." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -41,18 +41,14 @@ export async function POST(request: Request) {
       {
         $set: { password: hashedPassword },
         $unset: { passwordResetToken: "", passwordResetExpires: "" },
-      }
+      },
     );
 
     return NextResponse.json(
       { message: "Password has been successfully updated." },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
-    console.error("Password reset error:", error);
-    return NextResponse.json(
-      { error: "Internal server error." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }

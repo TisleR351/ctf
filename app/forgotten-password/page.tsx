@@ -24,15 +24,17 @@ export default function PasswordRecoveryPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to send reset link. Please try again.");
+        throw new Error(
+          data.error || "Failed to send reset link. Please try again.",
+        );
       }
 
       setMessage("A reset link has been sent to your email.");
     } catch (error: unknown) {
-      console.error("Error:", error);
-
       if (error instanceof Error) {
-        setMessage(error.message || "An error occurred. Please try again later.");
+        setMessage(
+          error.message || "An error occurred. Please try again later.",
+        );
       } else {
         setMessage("An unknown error occurred. Please try again later.");
       }
