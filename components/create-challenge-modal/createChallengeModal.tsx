@@ -82,6 +82,9 @@ export default function CreateChallengeModal({
       setFileUrl("");
       setFlag("");
       onCloseAction();
+
+      window.location.reload();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setError("An unexpected error occurred. Please try again.");
     }
@@ -134,7 +137,7 @@ export default function CreateChallengeModal({
           className={"category-input"}
         />
         <MainInput
-          label={"File URL"}
+          label={"File name"}
           type={"text"}
           value={fileUrl}
           onChange={(e) => setFileUrl(e.target.value)}

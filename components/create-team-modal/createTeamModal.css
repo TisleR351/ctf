@@ -1,0 +1,24 @@
+.create-team-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2vh;
+}
+
+.team-name-input {
+    height: 12vh;
+    font-size: var(--font-size-medium);
+}
+
+.save-button {
+    border: 1px solid var(--primary-8)
+}
+
+.create-team-success-message {
+    height: fit-content;
+    font-weight: initial;
+}
+
+.create-team-error-message {
+    font-weight: initial;
+}

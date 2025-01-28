@@ -1,23 +1,30 @@
 import "./challengeFileButton.css";
 import { HTMLAttributes } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileZipper } from "@fortawesome/free-solid-svg-icons";
 
 interface ChallengeFileButtonProps extends HTMLAttributes<HTMLButtonElement> {
   className?: string;
-  isConnected: boolean;
+  isPartOfTeam: boolean;
 }
 
 export function ChallengeFileButton({
   className,
-  isConnected,
+  isPartOfTeam,
   ...props
 }: ChallengeFileButtonProps) {
   return (
     <button
       className={`challenge-file-button ${className || ""}`.trim()}
-      disabled={!isConnected}
+      disabled={!isPartOfTeam}
       {...props}
     >
-      <i className={`zip-icon fa-solid fa-file-zipper`}></i>
+      <FontAwesomeIcon
+        icon={faFileZipper}
+        width={30}
+        height={30}
+        className={"login-menu-button-icon"}
+      />
       FileName.zip
     </button>
   );

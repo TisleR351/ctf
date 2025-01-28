@@ -1,0 +1,25 @@
+.team-info-section-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: var(--achromatic-0);
+    height: 6vh;
+    margin-right: 2vw;
+}
+
+.team-point-section {
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+    color: var(--primary-8);
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.team-name-section {
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+    color: var(--primary-8);
+    margin-left: 1vw;
+    margin-right: 1vw;
+}

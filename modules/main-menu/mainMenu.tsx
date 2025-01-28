@@ -3,7 +3,6 @@ import "./mainMenu.css";
 import Divider from "@/components/divider/divider";
 import {
   faFlag,
-  faSortAmountUp,
   faUserGraduate,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,8 +19,7 @@ export default function MainMenu() {
       </div>
       <Divider direction="horizontal" />
       <div className="main-menu-content">
-        <MenuButton icon={faFlag} tooltip="Challenge" href={"/challenge"} />
-        <MenuButton icon={faSortAmountUp} tooltip="Ranking" href={"/ranking"} />
+        <MenuButton icon={faFlag} tooltip="Challenges" href={"/challenges"} />
         <MenuButton icon={faUsers} tooltip="Teams" href={"/teams"} />
       </div>
       <Divider direction="horizontal" />

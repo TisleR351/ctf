@@ -5,12 +5,12 @@ import MainInput from "@/components/main-input/mainInput";
 interface ChallengeModalFormProps extends HTMLAttributes<HTMLFormElement> {
   className?: string;
   flag?: string;
-  isConnected: boolean;
+  isPartOfTeam: boolean;
 }
 
 export default function ChallengeModalForm({
   className,
-  isConnected,
+  isPartOfTeam,
   flag,
   ...props
 }: ChallengeModalFormProps) {
@@ -21,13 +21,14 @@ export default function ChallengeModalForm({
     >
       <MainInput
         type={"text"}
-        disabled={!isConnected || !!flag}
+        disabled={!isPartOfTeam || !!flag}
         placeholder={flag && flag}
+        className={"challenge-modal-form-flag-input"}
       />
       <button
         type={"submit"}
         className={"challenge-form-submit-button"}
-        disabled={!isConnected || !!flag}
+        disabled={!isPartOfTeam || !!flag}
       >
         Submit flag
       </button>

@@ -1,5 +1,17 @@
 import "./profileCredits.css";
+import { HTMLAttributes } from "react";
 
-export default function ProfileCredits() {
-  return <p className="profile-credits">75 pts</p>;
+interface ProfileCreditsProps extends HTMLAttributes<HTMLDivElement> {
+  points: number;
+}
+
+export default function ProfileCredits({
+  points,
+  ...props
+}: ProfileCreditsProps) {
+  return (
+    <p className="profile-credits" {...props}>
+      {points} pts
+    </p>
+  );
 }

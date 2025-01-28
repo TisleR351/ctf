@@ -1,3 +1,5 @@
+"use client";
+
 import "./page.css";
 import React from "react";
 import Countdown from "@/components/countdown/countdown";
@@ -20,8 +22,7 @@ export default function AboutUsPage() {
       <div className="about-us-title">Welcome to ECTF25</div>
       <Countdown />
       <div className="about-us-info">
-        The website is not available to the public yet, join our Discord to get
-        notified when registrations are available.
+          The website is still under development. Sign up and join our Discord to be notified when team registration becomes available.
       </div>
       <div className={"discord-link"}>
         <Link href="https://discord.gg/3kH63ckmeb" target="_blank">

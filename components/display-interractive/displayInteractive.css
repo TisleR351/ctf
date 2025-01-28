@@ -1,0 +1,87 @@
+.display-interactive-container {
+    position: relative;
+    font-family: Arial, sans-serif;
+    color: var(--primary-8);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.display-interactive-content {
+    width: 100%;
+    padding: 1%;
+    background-color: var(--achromatic-0);
+    font-family: Arial, sans-serif;
+    color: var(--primary-8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.display-interactive-label {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: var(--font-size-small);
+    margin-bottom: 1vh;
+    color: var(--achromatic-0);
+}
+
+.display-interactive-value {
+    font-size: var(--font-size-medium);
+    color: var(--primary-8);
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.display-interactive-button-error {
+    height: 8vh;
+    width: 8vh;
+    color: var(--tertiary-5);
+    border: 1px solid var(--tertiary-5);
+    justify-self: end;
+    transition: all 0.3s ease;
+}
+
+.display-interactive-button-error:hover {
+    color: var(--achromatic-0);
+    background-color: var(--tertiary-5);
+    transform: scale(1.05);
+}
+
+.display-interactive-button-error:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.display-interactive-button-error:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--tertiary-5), 0.5);
+}
+
+.display-interactive-button-available {
+    height: 8vh;
+    width: 8vh;
+    color: var(--primary-8);
+    border: 1px solid var(--primary-8);
+    transition: all 0.3s ease;
+}
+
+.display-interactive-button-available:hover {
+    color: var(--achromatic-0);
+    background-color: var(--primary-8);
+    transform: scale(1.05);
+}
+
+.display-interactive-button-available:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.display-interactive-button-available:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--primary-8), 0.5);
+}
+
+

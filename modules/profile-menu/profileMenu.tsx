@@ -9,9 +9,10 @@ import { motion } from "framer-motion";
 
 interface ProfileMenuProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
+  points: number;
 }
 
-export default function ProfileMenu({ name }: ProfileMenuProps) {
+export default function ProfileMenu({ name, points }: ProfileMenuProps) {
   const [isDropDownOpened, setIsDropDownOpened] = useState(false);
   const [displayedName, setDisplayedName] = useState<string>(name);
 
@@ -28,7 +29,7 @@ export default function ProfileMenu({ name }: ProfileMenuProps) {
           setIsDropDownOpened(false);
         }}
       >
-        <ProfileCredits />
+        <ProfileCredits points={points} />
         <Divider direction="vertical" className="sub-menu-divider" />
         <ProfileDropdown
           name={displayedName}
