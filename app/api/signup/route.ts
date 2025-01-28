@@ -1,42 +1,38 @@
 import { NextResponse } from "next/server";
+import {
+  hashPassword,
+  validatePassword,
+  generateToken,
+  sendEmail,
+} from "@/utils/services/apiServices";
 import { getDb } from "@/utils/lib/mongodb";
-import bcrypt from "bcryptjs";
-import crypto from "crypto";
 
 export async function POST(request: Request) {
-  const { email, username, password, confirmPassword } = await request.json();
-
-  if (!email || !username || !password || !confirmPassword) {
-    return NextResponse.json(
-      { error: "Every fields are required." },
-      { status: 400 },
-    );
-  }
-
-  if (password !== confirmPassword) {
-    return NextResponse.json(
-      { error: "Passwords do not match." },
-      { status: 400 },
-    );
-  }
-
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
-  if (!passwordRegex.test(password)) {
-    return NextResponse.json(
-      {
-        error:
-          "The password must contain at least 12 characters, one uppercase, lowercase, number and special character.",
-      },
-      { status: 400 },
-    );
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
-    const db = await getDb();
+    const { email, username, password, confirmPassword } = await request.json();
 
+    if (!email || !username || !password || !confirmPassword) {
+      return NextResponse.json(
+        { error: "All fields are required." },
+        { status: 400 },
+      );
+    }
+
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        { error: "Passwords do not match." },
+        { status: 400 },
+      );
+    }
+
+    if (!validatePassword(password)) {
+      return NextResponse.json(
+        { error: "The password does not meet the security criteria." },
+        { status: 400 },
+      );
+    }
+
+    const db = await getDb();
     const existingUser = await db.collection("user").findOne({
       $or: [{ email }, { username }],
     });
@@ -48,26 +44,33 @@ export async function POST(request: Request) {
       );
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
+    const hashedPassword = await hashPassword(password);
+    const token = generateToken();
 
-    const newUser = {
-      email: email,
-      username: username,
+    await db.collection("user").insertOne({
+      email,
+      username,
       password: hashedPassword,
       role: 0,
       team: "",
       points: 0,
-      token: token,
+      token,
       createdAt: new Date(),
-    };
+    });
 
-    await db.collection("user").insertOne(newUser);
+    const subject = "Welcome to the ECTF!";
+    const message = `Hello ${username},\n\nWelcome to our Capture The Flag!\n\nBest regards,\nThe ECTF Team`;
+
+    await sendEmail(email, subject, message);
 
     return NextResponse.json(
-      { message: "Sign up successfully." },
+      { message: "Sign up successfully. A welcome email has been sent." },
       { status: 201 },
     );
   } catch (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error", details: error },
+      { status: 500 },
+    );
   }
 }

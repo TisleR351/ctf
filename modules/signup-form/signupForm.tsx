@@ -110,6 +110,7 @@ export default function SignupForm() {
         </div>
         {error && (
           <Message
+            key={error}
             type={MessageEnums.ERROR}
             message={error}
             className={"signup-message"}
@@ -117,6 +118,7 @@ export default function SignupForm() {
         )}
         {message && (
           <Message
+            key={message}
             type={MessageEnums.SUCCESS}
             message={message}
             className={"signup-message"}
