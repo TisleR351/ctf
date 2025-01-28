@@ -8,7 +8,11 @@ export interface Team {
   points: number;
   token: string;
   ranking: string;
-  tried_challenges: Challenge[];
+  tried_challenges: {
+    challenge_id: string;
+    flag: false | string;
+    attempts: number;
+  }[];
   _id: string;
 }
 

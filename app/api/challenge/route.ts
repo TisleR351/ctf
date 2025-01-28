@@ -1,15 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/utils/lib/mongodb";
-
-interface Challenge {
-  name: string;
-  category: string;
-  description: string;
-  points: number;
-  author: string;
-  flag: string[];
-  file_url: string;
-}
+import { ChallengeMongoDB } from "@/utils/types/challenge";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -41,6 +32,7 @@ export async function GET(request: Request) {
                     category: "$$challenge.category",
                     description: "$$challenge.description",
                     points: "$$challenge.points",
+                    author: "$$challenge.author",
                     file_url: "$$challenge.file_url",
                   },
                 },
@@ -129,7 +121,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const newChallenge: Challenge = {
+    const newChallenge: ChallengeMongoDB = {
       name,
       category,
       author,
