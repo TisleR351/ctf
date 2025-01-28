@@ -22,7 +22,7 @@ export default function AboutUsPage() {
       <div className="about-us-title">Welcome to ECTF25</div>
       <Countdown />
       <div className="about-us-info">
-          The website is still under development. Sign up and join our Discord to be notified when team registration becomes available.
+        It&#39;s our first CTF! Test our challenges and let us know if you like
       </div>
       <div className={"discord-link"}>
         <Link href="https://discord.gg/3kH63ckmeb" target="_blank">
