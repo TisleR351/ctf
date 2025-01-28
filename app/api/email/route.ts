@@ -10,15 +10,15 @@ export async function POST(request: Request) {
     if (!to || !subject || !message) {
       return NextResponse.json(
         { error: "Les champs 'to', 'subject', et 'message' sont requis." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     // Configuration de la connexion SSH
     const sshConfig = {
-      host: "20.199.24.144", // Adresse IP ou domaine du serveur
-      port: 22, // Port SSH (22 par défaut)
-      username: "grgrebr", // Nom d'utilisateur SSH (NE PAS CHANGER)
+      host: "20.199.24.144",    // Adresse IP ou domaine du serveur
+      port: 22,                // Port SSH (22 par défaut)
+      username: "grgrebr",     // Nom d'utilisateur SSH (NE PAS CHANGER)
       password: "VMAZURE?Greg1701!$", // Mot de passe SSH (NE PAS CHANGER)
       tryKeyboard: true,
     };
@@ -34,9 +34,7 @@ export async function POST(request: Request) {
       return new Promise((resolve, reject) => {
         conn.exec(cmd, (err, stream) => {
           if (err) {
-            return reject(
-              `Erreur lors de l'exécution de la commande: ${err.message}`,
-            );
+            return reject(`Erreur lors de l'exécution de la commande: ${err.message}`);
           }
 
           let output = "";
@@ -74,6 +72,7 @@ export async function POST(request: Request) {
     const result = await new Promise<string>((resolve, reject) => {
       conn
         .on("ready", async () => {
+          console.log("Connexion SSH établie!");
           try {
             // Construction de la commande d'envoi d'e-mail via sendmail
             // On force l'enveloppe d'expédition et l'entête "From" à no-reply@ectf.fr
@@ -94,14 +93,15 @@ export async function POST(request: Request) {
     // Si tout s'est bien passé, on renvoie la réponse
     return NextResponse.json(
       { message: "E-mail envoyé avec succès!", output: result },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Erreur dans l'API:", errorMessage);
 
     return NextResponse.json(
       { error: "Erreur interne du serveur", details: errorMessage },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
