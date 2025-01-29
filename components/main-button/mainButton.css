@@ -9,11 +9,9 @@
 }
 .main-button {
     color: var(--primary-8);
-    width: auto;
     gap: 1vw;
     padding-right: 1vw;
     padding-left: 1vw;
-    aspect-ratio: 1;
     height: 70%;
     background-color: transparent;
     cursor: pointer;
