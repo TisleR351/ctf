@@ -26,7 +26,7 @@ export default function SignupFormInput({
       <label>{label}</label>
       <div className="input-wrapper">
         <input
-          type={type === "password" && !showPassword ? "password" : "text"}
+          type={type === "password" ? (!showPassword ? "password" : "text") : type}
           className={`signup-form-input ${className}`}
           {...props}
         />

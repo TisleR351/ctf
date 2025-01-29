@@ -1,11 +1,9 @@
 .login-menu-button {
     color: var(--primary-8);
-    width: auto;
     height: 100%;
     gap: 1vw;
     padding-right: 1vw;
     padding-left: 1vw;
-    aspect-ratio: 1;
     background-color: transparent;
     cursor: pointer;
     transition: all 0.05s ease-in-out;

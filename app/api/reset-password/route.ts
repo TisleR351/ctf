@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 import { hashPassword, updateUser } from "@/utils/services/apiServices";
 import { getDb } from "@/utils/lib/mongodb";
 
+function isValidPassword(password: string) {
+  const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
+  return passwordRegex.test(password);
+}
+
 export async function POST(request: Request) {
   try {
     const { token, password } = await request.json();
@@ -23,6 +29,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Invalid or expired token." },
         { status: 400 },
+      );
+    }
+
+    if (!isValidPassword(password)) {
+      return NextResponse.json(
+          { error: "Invalid password format or length (must contain at least 12 characters, one uppercase, lowercase, number and special character.)." },
+          { status: 400 }
       );
     }
 
