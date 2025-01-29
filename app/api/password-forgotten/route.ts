@@ -6,6 +6,11 @@ import {
   findUserByEmail,
 } from "@/utils/services/apiServices";
 
+function isValidEmail(email: string) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length >= 8 && email.length <= 90;
+}
+
 export async function POST(request: Request) {
   try {
     const { to } = await request.json();
@@ -14,6 +19,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "E-mail must be provided." },
         { status: 400 },
+      );
+    }
+
+    if (!isValidEmail(to)) {
+      return NextResponse.json(
+          { error: "Invalid email format or length (must be between 8 and 90 characters)." },
+          { status: 400 }
       );
     }
 
