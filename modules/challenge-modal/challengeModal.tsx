@@ -5,7 +5,7 @@ import "./challengeModal.css";
 import { Message } from "@/components/message/message";
 import { ChallengeFileButton } from "@/components/challenge-file-button/challengeFileButton";
 import ChallengeModalForm from "@/components/challenge-modal-form/challengeModalForm";
-import React, { HTMLAttributes, useEffect, useState } from "react";
+import React, {Dispatch, HTMLAttributes, SetStateAction, useEffect, useState} from "react";
 import ModalWindow from "@/modules/modal-window/challengeModal";
 import { Challenge } from "@/utils/types/challenge";
 import Link from "next/link";
@@ -16,16 +16,19 @@ interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   onCloseAction: () => void;
   challenge: Challenge;
+  attempts: number;
+  setAttemptsAction: Dispatch<SetStateAction<number>>;
 }
 
 export default function ChallengeModal({
   isOpen,
+  attempts,
+  setAttemptsAction,
   onCloseAction,
   challenge,
 }: ChallengeModalProps) {
   const { user } = useUser();
   const [isPartOfTeam, setIsPartOfTeam] = useState<boolean>(false);
-  const [attempts, setAttempts] = useState<number>(0);
   const [flag, setFlag] = useState<undefined | string>(undefined);
   const [type, setType] = useState<MessageEnums>();
   const [message, setMessage] = useState<string>();
@@ -39,7 +42,6 @@ export default function ChallengeModal({
       );
 
       if (triedChallenge) {
-        setAttempts(triedChallenge.attempts);
         if (triedChallenge.flag) {
           setFlag(triedChallenge.flag);
           setType(MessageEnums.SUCCESS);
@@ -86,7 +88,7 @@ export default function ChallengeModal({
       </div>
       <ChallengeModalForm
         numberAttempts={attempts}
-        setNumberAttempts={setAttempts}
+        setNumberAttempts={setAttemptsAction}
         challenge_id={`${challenge._id}`}
         flag={flag}
         isPartOfTeam={isPartOfTeam}

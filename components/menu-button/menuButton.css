@@ -1,4 +1,5 @@
 .menu-button {
+    height: 60px;
     color: var(--primary-8);
     width: 80%;
     font-size: var(--font-size-large);

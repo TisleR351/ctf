@@ -22,6 +22,7 @@ export default function ChallengeCard({
     ChallengeCardTypeEnums.NEUTRAL,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [attempts, setAttempts] = useState<number>(0);
 
   useEffect(() => {
     if (user) {
@@ -32,6 +33,7 @@ export default function ChallengeCard({
         );
 
         if (triedChallenge) {
+          setAttempts(triedChallenge.attempts);
           if (triedChallenge.flag) {
             setType(MessageEnums.SUCCESS);
           }
@@ -61,6 +63,8 @@ export default function ChallengeCard({
 
       {isModalOpen && (
         <ChallengeModal
+          attempts={attempts}
+          setAttemptsAction={setAttempts}
           isOpen={isModalOpen}
           onCloseAction={closeModal}
           challenge={challenge}
