@@ -1,8 +1,8 @@
 .menu-button {
+    height: 60px;
     color: var(--primary-8);
     width: 80%;
     font-size: var(--font-size-large);
-    aspect-ratio: 1;
     background-color: transparent;
     cursor: pointer;
     transition: all 0.05s ease-in-out;
