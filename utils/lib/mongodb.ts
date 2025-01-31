@@ -16,7 +16,10 @@ export const getClient = async (): Promise<MongoClient> => {
   }
 
   try {
-    const client = new MongoClient(uri);
+    const client = new MongoClient(uri, {
+      maxPoolSize: 10, // Ajustez ce nombre en fonction de votre besoin
+      minPoolSize: 2,  // Maintient un minimum de connexions ouvertes
+    });
     cachedClient = await client.connect();
     return cachedClient;
   } catch (error) {
