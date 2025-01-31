@@ -16,16 +16,15 @@ const updateUserTeam = async (db: Db, userId: string, teamId: string) => {
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const teamName = url.searchParams.get("teamName"); // Récupérer le paramètre query "teamName"
-  const sortOrder = url.searchParams.get("sortOrder") || "desc"; // Récupérer l'ordre de tri (par défaut 'desc')
+  const teamName = url.searchParams.get("teamName");
+  const sortOrder = url.searchParams.get("sortOrder") || "desc";
 
   try {
     const db = await getDb();
 
-    // Définir un filtre de base
     let filter = {};
     if (teamName) {
-      filter = { name: teamName }; // Filtrer par le nom de l'équipe
+      filter = { name: teamName };
     }
 
     // Définir l'ordre de tri par points
@@ -38,7 +37,7 @@ export async function GET(request: Request) {
       .sort({ points: sortByPoints })
       .toArray();
 
-    const teamsWithRanking = teams.map((team, index: number) => ({
+    const teamsWithRanking = teams.map((team: TeamMongoDBWithRanking, index: number) => ({
       ...team,
       ranking: index + 1,
     })) as unknown as TeamMongoDBWithRanking[];

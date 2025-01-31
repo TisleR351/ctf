@@ -1,21 +1,35 @@
 import { MongoClient } from "mongodb";
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+const uri = process.env.MONGODB_URI!;
 const dbName = process.env.MONGODB_DB_NAME!;
 
-let clientPromise: Promise<MongoClient>;
-
-if (process.env.NODE_ENV === "development") {
-  clientPromise = client.connect();
-} else {
-  clientPromise = client.connect();
+if (!uri || !dbName) {
+  throw new Error("Please define the MONGODB_URI and MONGODB_DB_NAME environment variables inside .env.local");
 }
 
-export const getClient = async () => {
-  return await clientPromise;
+let cachedClient: MongoClient | null = null;
+let cachedDb: any = null;
+
+export const getClient = async (): Promise<MongoClient> => {
+  if (cachedClient) {
+    return cachedClient;
+  }
+
+  try {
+    const client = new MongoClient(uri);
+    cachedClient = await client.connect();
+    return cachedClient;
+  } catch (error) {
+    throw new Error(`Failed to connect to database`);
+  }
 };
 
 export const getDb = async () => {
+  if (cachedDb) {
+    return cachedDb;
+  }
+
   const client = await getClient();
-  return client.db(dbName);
+  cachedDb = client.db(dbName);
+  return cachedDb;
 };
