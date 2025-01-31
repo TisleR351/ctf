@@ -83,7 +83,7 @@ export default function ChallengeModal({
       {type && <Message type={type} message={message} time={20000} />}
       <div className={"challenge-file-button-link"}>
         <Link href={`/challenge-directory/${challenge.file_url}`}>
-          <ChallengeFileButton isPartOfTeam={isPartOfTeam} />
+          <ChallengeFileButton isPartOfTeam={isPartOfTeam} label={challenge.file_url}/>
         </Link>
       </div>
       <ChallengeModalForm

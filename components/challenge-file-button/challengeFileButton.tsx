@@ -5,18 +5,20 @@ import { faFileZipper } from "@fortawesome/free-solid-svg-icons";
 
 interface ChallengeFileButtonProps extends HTMLAttributes<HTMLButtonElement> {
   className?: string;
+  label?: string;
   isPartOfTeam: boolean;
 }
 
 export function ChallengeFileButton({
   className,
+  label,
   isPartOfTeam,
   ...props
 }: ChallengeFileButtonProps) {
   return (
     <button
       className={`challenge-file-button ${className || ""}`.trim()}
-      disabled={!isPartOfTeam}
+      disabled={!isPartOfTeam || label === "N/A"}
       {...props}
     >
       <FontAwesomeIcon
@@ -25,7 +27,7 @@ export function ChallengeFileButton({
         height={30}
         className={"login-menu-button-icon"}
       />
-      FileName.zip
+      {!!label && label}
     </button>
   );
 }
