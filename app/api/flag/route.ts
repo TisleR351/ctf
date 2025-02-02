@@ -166,7 +166,7 @@ export async function POST() {
 
 
     return NextResponse.json(
-      { error: "Nice try! But it's too late to submit any flag! ;) You can post your trophy on discord. Open a ticket and we'll had 100 points to your team" },
+      { error: "Nice try! But it's too late to submit any flag! ;) You can post your trophy on discord." },
       { status: 404 },
     );
 }
