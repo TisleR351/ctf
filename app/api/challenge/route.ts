@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/utils/lib/mongodb";
-import { ObjectId } from "mongodb";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

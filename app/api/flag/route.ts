@@ -1,7 +1,7 @@
 import {NextResponse} from "next/server";
 
 
-export async function POST(request: Request) {
+export async function POST() {
   // const authHeader = request.headers.get("Authorization");
   //
   // if (!authHeader || !authHeader.startsWith("Bearer ")) {
