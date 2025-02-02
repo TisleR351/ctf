@@ -23,41 +23,9 @@ interface ChallengeModalProps extends HTMLAttributes<HTMLDivElement> {
 export default function ChallengeModal({
   isOpen,
   attempts,
-  setAttemptsAction,
   onCloseAction,
   challenge,
 }: ChallengeModalProps) {
-  const { user } = useUser();
-  const [isPartOfTeam, setIsPartOfTeam] = useState<boolean>(false);
-  const [flag, setFlag] = useState<undefined | string>(undefined);
-  const [type, setType] = useState<MessageEnums>();
-  const [message, setMessage] = useState<string>();
-
-  useEffect(() => {
-    if (user?.team) {
-      setIsPartOfTeam(true);
-
-      const triedChallenge = user.team.tried_challenges?.find(
-        (c) => c.challenge_id === challenge._id,
-      );
-
-      if (triedChallenge) {
-        if (triedChallenge.flag) {
-          setFlag(triedChallenge.flag);
-          setType(MessageEnums.SUCCESS);
-          setMessage("Congratulations, you already solved this challenge!");
-        } else {
-          setFlag(undefined);
-        }
-      }
-    } else {
-      setIsPartOfTeam(false);
-      setType(MessageEnums.NEUTRAL);
-      setMessage(
-        "You must be part of a team to participate in this challenge.",
-      );
-    }
-  }, [user, challenge]);
   return (
     <ModalWindow isOpen={isOpen} onCloseAction={onCloseAction}>
       <div className="challenge-modal-content-title">{challenge.name}</div>
@@ -80,19 +48,21 @@ export default function ChallengeModal({
           {attempts}
         </div>
       </div>
-      {type && <Message type={type} message={message} time={20000} />}
-      <div className={"challenge-file-button-link"}>
-        <Link href={`/challenge-directory/${challenge.file_url}`}>
-          <ChallengeFileButton isPartOfTeam={isPartOfTeam} label={challenge.file_url}/>
-        </Link>
-      </div>
-      <ChallengeModalForm
-        numberAttempts={attempts}
-        setNumberAttempts={setAttemptsAction}
-        challenge_id={`${challenge._id}`}
-        flag={flag}
-        isPartOfTeam={isPartOfTeam}
-      />
+        <div><strong>Solves : </strong>{challenge.teamsSucceededCount}</div>
+        <div><strong>Percentage : </strong>{challenge.successPercentage}%</div>
+      {/*{type && <Message type={type} message={message} time={20000} />}*/}
+      {/*<div className={"challenge-file-button-link"}>*/}
+      {/*  <Link href={`/challenge-directory/${challenge.file_url}`}>*/}
+      {/*    <ChallengeFileButton isPartOfTeam={isPartOfTeam} label={challenge.file_url}/>*/}
+      {/*  </Link>*/}
+      {/*</div>*/}
+      {/*<ChallengeModalForm*/}
+      {/*  numberAttempts={attempts}*/}
+      {/*  setNumberAttempts={setAttemptsAction}*/}
+      {/*  challenge_id={`${challenge._id}`}*/}
+      {/*  flag={flag}*/}
+      {/*  isPartOfTeam={isPartOfTeam}*/}
+      {/*/>*/}
     </ModalWindow>
   );
 }
