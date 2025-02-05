@@ -11,18 +11,7 @@ As part of the evolution of our ESIG-CTF (E-CTF) project, here is a list of impr
     - **Status**: Solved or Unsolved.
 - Improve the ergonomics of the challenge list for simplified navigation.
 
-### 2. SMTP Server Integration
-- Configure an SMTP server to enable email sending, specifically:
-    - Confirmation emails during account creation.
-    - Important notifications (password changes, announcements, etc.).
-- Ensure secure email handling, including:
-    - Data protection.
-    - Enhanced authentication.
-
 ### 3. Barre latérale du text-area du formulaire de création d'un challenge
-### 4. Possibilité de créer une équipe
-### 5. Possibilité de s'enregistrer dans une équipe
-### 5. Possibilité d'enregistrer un flag
 
 ---
 
