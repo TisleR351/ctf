@@ -9,6 +9,8 @@ export interface Challenge {
   author: string;
   flag: string[];
   file_url: string;
+  teamsSucceededCount: string;
+  successPercentage: string;
 }
 
 export interface ChallengeMongoDB {

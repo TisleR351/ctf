@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/utils/lib/mongodb";
-import { ChallengeMongoDB } from "@/utils/types/challenge";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -9,134 +8,104 @@ export async function GET(request: Request) {
   try {
     const db = await getDb();
 
+    // Obtenez le nombre total d'équipes
+    const totalTeamsCount = await db.collection("teams").countDocuments();
+
     if (groupBy === "category") {
       const groupedChallenges = await db
-        .collection("challenge")
-        .aggregate([
-          {
-            $group: {
-              _id: "$category",
-              challenges: { $push: "$$ROOT" },
+          .collection("challenge")
+          .aggregate([
+            {
+              $lookup: {
+                from: "teams", // Joindre la collection teams
+                let: { challenge_id: "$_id" }, // Passer l'_id du challenge à la jointure
+                pipeline: [
+                  {
+                    $unwind: "$tried_challenges", // Décomposer le tableau "tried_challenges"
+                  },
+                  {
+                    // Convertir le "challenge_id" en ObjectId pour comparer
+                    $addFields: {
+                      "tried_challenges.challenge_id": {
+                        $toObjectId: "$tried_challenges.challenge_id"
+                      }
+                    }
+                  },
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ["$tried_challenges.challenge_id", "$$challenge_id"], // Assurer que l'ID du challenge correspond
+                      },
+                      "tried_challenges.flag": { $ne: null }, // Ne conserver que les réussites (flag != null)
+                    },
+                  },
+                  {
+                    $group: {
+                      _id: "$_id", // Regrouper par team
+                    },
+                  },
+                ],
+                as: "teamsSucceeded", // Liste des équipes ayant réussi ce challenge
+              },
             },
-          },
-          { $project: { _id: 0, category: "$_id", challenges: 1 } },
-          {
-            $addFields: {
-              challenges: {
-                $map: {
-                  input: "$challenges",
-                  as: "challenge",
-                  in: {
-                    _id: "$$challenge._id",
-                    name: "$$challenge.name",
-                    category: "$$challenge.category",
-                    description: "$$challenge.description",
-                    points: "$$challenge.points",
-                    author: "$$challenge.author",
-                    file_url: "$$challenge.file_url",
+            {
+              $addFields: {
+                teamsSucceededCount: { $size: "$teamsSucceeded" }, // Compter le nombre de teams ayant réussi
+                successPercentage: {
+                  $cond: {
+                    if: { $eq: [totalTeamsCount, 0] },
+                    then: 0,
+                    else: {
+                      $round: [
+                        { $multiply: [{ $divide: [{ $size: "$teamsSucceeded" }, totalTeamsCount] }, 100] },
+                        2
+                      ]
+                    }
+                  }
+                } // Calculer le pourcentage de réussite et arrondir à deux chiffres
+              },
+            },
+            {
+              $group: {
+                _id: "$category", // Regrouper par catégorie
+                challenges: { $push: "$$ROOT" }, // Rassembler les challenges sous chaque catégorie
+              },
+            },
+            { $project: { _id: 0, category: "$_id", challenges: 1 } }, // Retirer le champ _id
+            {
+              $addFields: {
+                challenges: {
+                  $map: {
+                    input: "$challenges",
+                    as: "challenge",
+                    in: {
+                      _id: "$$challenge._id",
+                      name: "$$challenge.name",
+                      category: "$$challenge.category",
+                      description: "$$challenge.description",
+                      points: "$$challenge.points",
+                      author: "$$challenge.author",
+                      file_url: "$$challenge.file_url",
+                      teamsSucceededCount: "$$challenge.teamsSucceededCount", // Ajouter le nombre de teams ayant réussi
+                      successPercentage: "$$challenge.successPercentage" // Ajouter le pourcentage de réussite
+                    },
                   },
                 },
               },
             },
-          },
-        ])
-        .toArray();
+          ])
+          .toArray();
 
       return NextResponse.json(groupedChallenges, { status: 200 });
     }
 
+    // Si "group_by" n'est pas défini ou est une valeur différente, retourner simplement les challenges
     const challenges = await db
-      .collection("challenge")
-      .find({}, { projection: { flag: 0 } })
-      .toArray();
+        .collection("challenge")
+        .find({}, { projection: { flag: 0 } })
+        .toArray();
 
     return NextResponse.json(challenges, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
-  }
-}
-
-export async function POST(request: Request) {
-  const authHeader = request.headers.get("Authorization");
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return NextResponse.json(
-      { error: "Authorization header missing or malformed." },
-      { status: 401 },
-    );
-  }
-
-  const token = authHeader.split(" ")[1];
-
-  try {
-    const db = await getDb();
-
-    const user = await db.collection("user").findOne({ token });
-
-    if (!user || user.role !== 10000) {
-      return NextResponse.json(
-        {
-          error: "Unauthorized. Insufficient permissions.",
-          user: user,
-          token: token,
-        },
-        { status: 403 },
-      );
-    }
-
-    const { name, category, description, points, flag, file_url, author } =
-      await request.json();
-
-    if (
-      !name ||
-      !category ||
-      !description ||
-      !author ||
-      points == null ||
-      !flag ||
-      !file_url
-    ) {
-      return NextResponse.json(
-        { error: "All fields are required." },
-        { status: 400 },
-      );
-    }
-
-    if (typeof flag !== "string") {
-      return NextResponse.json(
-        { error: "Flags must be provided as a comma-separated string." },
-        { status: 400 },
-      );
-    }
-
-    const flags = flag.match(/ectf{.*?}/g);
-
-    if (!flags || flags.length === 0) {
-      return NextResponse.json(
-        {
-          error:
-            "Invalid flag format. Flags must follow the pattern 'ectf{...}'.",
-        },
-        { status: 400 },
-      );
-    }
-
-    const newChallenge: ChallengeMongoDB = {
-      name,
-      category,
-      author,
-      description,
-      points,
-      flag: flags,
-      file_url,
-    };
-
-    await db.collection("challenge").insertOne(newChallenge);
-
-    return NextResponse.json(
-      { message: "Challenge created successfully." },
-      { status: 201 },
-    );
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });
   }

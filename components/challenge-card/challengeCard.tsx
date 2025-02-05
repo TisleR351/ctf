@@ -19,7 +19,7 @@ export default function ChallengeCard({
 }: ChallengeCardProps) {
   const { user } = useUser();
   const [type, setType] = React.useState<string>(
-    ChallengeCardTypeEnums.NEUTRAL,
+    ChallengeCardTypeEnums.PRIMARY,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [attempts, setAttempts] = useState<number>(0);
